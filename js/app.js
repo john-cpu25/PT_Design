@@ -35,6 +35,53 @@ const App = (() => {
     // ─── Initialize ───
     function init() {
         renderDashboard();
+        setupIntro();
+    }
+
+    // ─── Video Intro ───
+    function setupIntro() {
+        const overlay = document.getElementById('introOverlay');
+        const video = document.getElementById('introVideo');
+        if (!overlay || !video) {
+            showApp();
+            return;
+        }
+
+        // When video ends, fade out intro
+        video.addEventListener('ended', () => {
+            dismissIntro();
+        });
+
+        // Fallback: if video fails to load, skip immediately
+        video.addEventListener('error', () => {
+            dismissIntro();
+        });
+    }
+
+    function skipIntro() {
+        const video = document.getElementById('introVideo');
+        if (video) video.pause();
+        dismissIntro();
+    }
+
+    function dismissIntro() {
+        const overlay = document.getElementById('introOverlay');
+        if (!overlay) return;
+
+        overlay.classList.add('fade-out');
+
+        // Show app shell immediately so it's visible behind the fading overlay
+        showApp();
+
+        // Remove overlay from DOM after transition
+        setTimeout(() => {
+            overlay.remove();
+        }, 900);
+    }
+
+    function showApp() {
+        const appShell = document.getElementById('appShell');
+        if (appShell) appShell.classList.remove('hidden');
     }
 
     // ─── Dashboard ───
@@ -307,7 +354,7 @@ const App = (() => {
     }
 
     // ─── Public API ───
-    return { init, openTool, goHome };
+    return { init, openTool, goHome, skipIntro };
 
 })();
 

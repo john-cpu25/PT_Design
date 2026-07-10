@@ -12,7 +12,18 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div class="app-shell">
+    <!-- ===== VIDEO INTRO OVERLAY ===== -->
+    <div class="intro-overlay" id="introOverlay">
+        <video class="intro-video" id="introVideo" autoplay muted playsinline>
+            <source src="intro.mp4" type="video/mp4">
+        </video>
+        <button class="intro-skip" id="introSkip" onclick="App.skipIntro()">
+            Bỏ qua
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+        </button>
+    </div>
+
+    <div class="app-shell hidden" id="appShell">
 
         <!-- Top Navigation -->
         <nav class="top-nav">
