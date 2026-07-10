@@ -1,0 +1,677 @@
+/* ========================================
+   PT Design Dashboard - White Theme
+   ======================================== */
+
+/* ---------- Design Tokens ---------- */
+:root {
+    --bg-primary: #FFFFFF;
+    --bg-secondary: #F8F9FC;
+    --bg-card: #FFFFFF;
+    --bg-hover: #F1F3F9;
+    --bg-input: #F4F6FA;
+    --bg-input-focus: #FFFFFF;
+
+    --text-primary: #1A1D2E;
+    --text-secondary: #6B7280;
+    --text-tertiary: #9CA3AF;
+    --text-accent: #4F46E5;
+
+    --border-light: #E5E7EB;
+    --border-medium: #D1D5DB;
+    --border-focus: #4F46E5;
+
+    --accent-primary: #4F46E5;
+    --accent-primary-light: #EEF2FF;
+    --accent-primary-hover: #4338CA;
+    --accent-success: #059669;
+    --accent-success-light: #ECFDF5;
+    --accent-warning: #D97706;
+    --accent-warning-light: #FFFBEB;
+    --accent-info: #0284C7;
+    --accent-info-light: #F0F9FF;
+
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.06);
+    --shadow-lg: 0 8px 30px rgba(0,0,0,0.08);
+    --shadow-xl: 0 20px 60px rgba(0,0,0,0.1);
+    --shadow-card: 0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.03);
+    --shadow-card-hover: 0 8px 30px rgba(79, 70, 229, 0.12), 0 4px 12px rgba(0,0,0,0.06);
+
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+    --radius-full: 9999px;
+
+    --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-smooth: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ---------- Reset & Base ---------- */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+}
+
+/* ---------- App Shell ---------- */
+.app-shell {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ---------- Top Navigation ---------- */
+.top-nav {
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border-light);
+    padding: 0 32px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(12px);
+    background: rgba(255,255,255,0.92);
+}
+
+.nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.nav-logo {
+    width: 38px;
+    height: 38px;
+    background: linear-gradient(135deg, var(--accent-primary), #7C3AED);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.15rem;
+    color: white;
+    font-weight: 800;
+    box-shadow: 0 2px 8px rgba(79, 70, 229, 0.3);
+    transition: var(--transition-normal);
+}
+
+.nav-brand:hover .nav-logo {
+    transform: scale(1.08) rotate(-3deg);
+    box-shadow: 0 4px 16px rgba(79, 70, 229, 0.4);
+}
+
+.nav-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+}
+
+.nav-subtitle {
+    font-size: 0.7rem;
+    color: var(--text-tertiary);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.nav-back {
+    display: none;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-full);
+    background: var(--bg-primary);
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition-normal);
+    font-family: inherit;
+}
+
+.nav-back:hover {
+    background: var(--bg-hover);
+    color: var(--text-primary);
+    border-color: var(--border-medium);
+}
+
+.nav-back.visible {
+    display: flex;
+}
+
+.nav-back svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* ---------- Main Content ---------- */
+.main-content {
+    flex: 1;
+    padding: 40px 32px;
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+/* ---------- Dashboard View ---------- */
+.view {
+    display: none;
+    animation: viewFadeIn 0.4s var(--transition-smooth) forwards;
+}
+
+.view.active {
+    display: block;
+}
+
+@keyframes viewFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Dashboard Header */
+.dashboard-header {
+    text-align: center;
+    margin-bottom: 48px;
+}
+
+.dashboard-title {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    letter-spacing: -0.03em;
+    margin-bottom: 8px;
+}
+
+.dashboard-subtitle {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    font-weight: 400;
+}
+
+/* ---------- Tool Cards Grid ---------- */
+.tools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+}
+
+.tool-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-xl);
+    padding: 32px;
+    cursor: pointer;
+    transition: var(--transition-normal);
+    box-shadow: var(--shadow-card);
+    position: relative;
+    overflow: hidden;
+}
+
+.tool-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--card-accent, var(--accent-primary)), var(--card-accent-end, #7C3AED));
+    opacity: 0;
+    transition: var(--transition-normal);
+}
+
+.tool-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-card-hover);
+    border-color: rgba(79, 70, 229, 0.15);
+}
+
+.tool-card:hover::before {
+    opacity: 1;
+}
+
+.tool-card:active {
+    transform: translateY(-2px);
+}
+
+.tool-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    margin-bottom: 20px;
+    transition: var(--transition-normal);
+    position: relative;
+}
+
+.tool-card:hover .tool-icon {
+    transform: scale(1.1);
+}
+
+.tool-icon.icon-indigo {
+    background: var(--accent-primary-light);
+    color: var(--accent-primary);
+}
+
+.tool-icon.icon-emerald {
+    background: var(--accent-success-light);
+    color: var(--accent-success);
+}
+
+.tool-icon.icon-amber {
+    background: var(--accent-warning-light);
+    color: var(--accent-warning);
+}
+
+.tool-icon.icon-sky {
+    background: var(--accent-info-light);
+    color: var(--accent-info);
+}
+
+.tool-name {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+    letter-spacing: -0.01em;
+}
+
+.tool-desc {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.tool-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.tool-tag {
+    padding: 4px 12px;
+    border-radius: var(--radius-full);
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.tag-structural {
+    background: var(--accent-primary-light);
+    color: var(--accent-primary);
+}
+
+.tag-design {
+    background: var(--accent-success-light);
+    color: var(--accent-success);
+}
+
+.tag-analysis {
+    background: var(--accent-warning-light);
+    color: var(--accent-warning);
+}
+
+.tool-arrow {
+    margin-left: auto;
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-full);
+    background: var(--bg-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-tertiary);
+    transition: var(--transition-normal);
+}
+
+.tool-card:hover .tool-arrow {
+    background: var(--accent-primary);
+    color: white;
+    transform: translateX(4px);
+}
+
+/* ---------- Tool View ---------- */
+.tool-view {
+    display: none;
+    animation: toolSlideIn 0.45s var(--transition-smooth) forwards;
+}
+
+.tool-view.active {
+    display: block;
+}
+
+@keyframes toolSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.tool-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.tool-header-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+}
+
+.tool-header-info h2 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+}
+
+.tool-header-info p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-top: 2px;
+}
+
+/* ---------- PT Calculator (White Theme) ---------- */
+.calc-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+.calc-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-xl);
+    padding: 28px;
+    box-shadow: var(--shadow-card);
+    transition: var(--transition-normal);
+}
+
+.calc-card:hover {
+    box-shadow: var(--shadow-md);
+}
+
+.calc-card.full-width {
+    grid-column: 1 / -1;
+}
+
+.calc-card-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--accent-primary);
+    margin-bottom: 20px;
+}
+
+.calc-card-title svg {
+    width: 20px;
+    height: 20px;
+}
+
+.calc-inputs {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 16px;
+}
+
+.calc-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.calc-field label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.calc-field input {
+    background: var(--bg-input);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    padding: 10px 14px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    transition: var(--transition-fast);
+    outline: none;
+    font-family: inherit;
+    width: 100%;
+}
+
+.calc-field input:focus {
+    border-color: var(--border-focus);
+    background: var(--bg-input-focus);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.08);
+}
+
+.calc-output {
+    border-top: 1px solid var(--border-light);
+    margin-top: 20px;
+    padding-top: 16px;
+}
+
+.calc-result-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+}
+
+.calc-result-label {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.calc-result-value {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--accent-primary);
+}
+
+.calc-result-unit {
+    font-size: 0.7rem;
+    color: var(--text-tertiary);
+    font-weight: 500;
+    margin-left: 4px;
+}
+
+/* Total card */
+.calc-total-card {
+    background: linear-gradient(135deg, #EEF2FF, #F5F3FF);
+    border: 1px solid rgba(79, 70, 229, 0.12);
+    text-align: center;
+}
+
+.calc-total-value {
+    font-size: 3rem;
+    font-weight: 900;
+    color: var(--accent-primary);
+    margin: 8px 0;
+    letter-spacing: -0.03em;
+}
+
+.calc-total-unit {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+/* ---------- Empty State ---------- */
+.empty-state {
+    text-align: center;
+    padding: 80px 20px;
+    color: var(--text-tertiary);
+}
+
+.empty-state-icon {
+    font-size: 3rem;
+    margin-bottom: 16px;
+    opacity: 0.5;
+}
+
+.empty-state-text {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+/* ---------- Footer ---------- */
+.app-footer {
+    text-align: center;
+    padding: 24px 32px;
+    border-top: 1px solid var(--border-light);
+    background: var(--bg-primary);
+}
+
+.footer-text {
+    font-size: 0.78rem;
+    color: var(--text-tertiary);
+    font-weight: 400;
+}
+
+/* ---------- Animations ---------- */
+.tool-card {
+    opacity: 0;
+    animation: cardFadeIn 0.5s ease-out forwards;
+}
+
+.tool-card:nth-child(1) { animation-delay: 0.05s; }
+.tool-card:nth-child(2) { animation-delay: 0.1s; }
+.tool-card:nth-child(3) { animation-delay: 0.15s; }
+.tool-card:nth-child(4) { animation-delay: 0.2s; }
+.tool-card:nth-child(5) { animation-delay: 0.25s; }
+.tool-card:nth-child(6) { animation-delay: 0.3s; }
+
+@keyframes cardFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.calc-card {
+    opacity: 0;
+    animation: calcCardIn 0.5s ease-out forwards;
+}
+
+.calc-card:nth-child(1) { animation-delay: 0.05s; }
+.calc-card:nth-child(2) { animation-delay: 0.1s; }
+.calc-card:nth-child(3) { animation-delay: 0.15s; }
+.calc-card:nth-child(4) { animation-delay: 0.2s; }
+
+@keyframes calcCardIn {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 768px) {
+    .top-nav {
+        padding: 0 16px;
+    }
+
+    .main-content {
+        padding: 24px 16px;
+    }
+
+    .dashboard-title {
+        font-size: 1.5rem;
+    }
+
+    .tools-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .calc-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .tool-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .calc-inputs {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .calc-total-value {
+        font-size: 2.2rem;
+    }
+
+    .nav-back span {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .calc-inputs {
+        grid-template-columns: 1fr;
+    }
+
+    .tool-card {
+        padding: 24px;
+    }
+}
