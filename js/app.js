@@ -17,6 +17,16 @@ const App = (() => {
             render: renderPTSpacingRate,
             headerIcon: 'icon-indigo',
         },
+        {
+            id: 'punching-shear',
+            name: 'Punching Shear Check',
+            desc: 'Kiểm tra chọc thủng cho sàn phẳng bê tông cốt thép / ứng lực trước theo AS3600.',
+            icon: '🏢',
+            iconClass: 'icon-emerald',
+            tags: [{ text: 'Structural', cls: 'tag-structural' }],
+            render: renderPunchingShear,
+            headerIcon: 'icon-emerald',
+        },
         // Future tools can be added here:
         // {
         //     id: 'pt-loss',
@@ -351,6 +361,207 @@ const App = (() => {
 
         // Initial calculation
         ptCalculate();
+    }
+
+    // ─── Punching Shear Calculator ───
+    function renderPunchingShear(container) {
+        container.innerHTML = `
+            <div class="segment-control" id="ps-type-selector">
+                <button class="segment-btn active" data-type="internal">Internal Column</button>
+                <button class="segment-btn" data-type="edge">Edge Column</button>
+                <button class="segment-btn" data-type="corner">Corner Column</button>
+            </div>
+
+            <div class="calc-grid">
+                <!-- Geometry -->
+                <section class="calc-card">
+                    <div class="calc-card-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/></svg>
+                        Geometry & Properties
+                    </div>
+                    <div class="calc-inputs">
+                        <div class="calc-field">
+                            <label for="ps-dim-x">Col Dim X (mm)</label>
+                            <input type="number" id="ps-dim-x" value="300" step="10">
+                        </div>
+                        <div class="calc-field">
+                            <label for="ps-dim-y">Col Dim Y (mm)</label>
+                            <input type="number" id="ps-dim-y" value="300" step="10">
+                        </div>
+                        <div class="calc-field">
+                            <label for="ps-depth">Slab Depth (mm)</label>
+                            <input type="number" id="ps-depth" value="250" step="10">
+                        </div>
+                        <div class="calc-field">
+                            <label for="ps-cover">Cover (mm)</label>
+                            <input type="number" id="ps-cover" value="30" step="1">
+                        </div>
+                        <div class="calc-field">
+                            <label for="ps-fc">f'c (MPa)</label>
+                            <input type="number" id="ps-fc" value="40" step="1">
+                        </div>
+                        <div class="calc-field">
+                            <label for="ps-fcp">fcp (MPa)</label>
+                            <input type="number" id="ps-fcp" value="1.0" step="0.1">
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Loads & Rebar -->
+                <section class="calc-card">
+                    <div class="calc-card-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"/><path d="m17 22-5-5-5 5"/><path d="m17 2-5 5-5-5"/></svg>
+                        Loads & Reinforcement
+                    </div>
+                    <div class="calc-inputs">
+                        <div class="calc-field">
+                            <label for="ps-v">V* (kN)</label>
+                            <input type="number" id="ps-v" value="1000" step="10">
+                        </div>
+                        <div class="calc-field">
+                            <label for="ps-mx">M*x (kNm)</label>
+                            <input type="number" id="ps-mx" value="50" step="1">
+                        </div>
+                        <div class="calc-field">
+                            <label for="ps-my">M*y (kNm)</label>
+                            <input type="number" id="ps-my" value="50" step="1">
+                        </div>
+                        <div class="calc-field">
+                            <label for="ps-bar-3">3rd Layer Bar Ø</label>
+                            <input type="number" id="ps-bar-3" value="24" step="1">
+                        </div>
+                        <div class="calc-field">
+                            <label for="ps-bar-4">4th Layer Bar Ø</label>
+                            <input type="number" id="ps-bar-4" value="24" step="1">
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Results -->
+                <section class="calc-card full-width">
+                    <div class="calc-card-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                        Results Summary
+                    </div>
+                    <div class="calc-output" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0 40px; border-top: none; padding-top: 0; margin-top: 0;">
+                        <div>
+                            <div class="calc-result-row">
+                                <span class="calc-result-label">Effective Depth (do)</span>
+                                <span class="calc-result-value" id="res-do">0 <span class="calc-result-unit">mm</span></span>
+                            </div>
+                            <div class="calc-result-row">
+                                <span class="calc-result-label">Critical Perimeter (u)</span>
+                                <span class="calc-result-value" id="res-u">0 <span class="calc-result-unit">mm</span></span>
+                            </div>
+                            <div class="calc-result-row">
+                                <span class="calc-result-label">Shear Strength (fcv)</span>
+                                <span class="calc-result-value" id="res-fcv">0.00 <span class="calc-result-unit">MPa</span></span>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="calc-result-row">
+                                <span class="calc-result-label">Design Load (fVu)</span>
+                                <span class="calc-result-value" id="res-fvu">0 <span class="calc-result-unit">kN</span></span>
+                            </div>
+                            <div class="calc-result-row">
+                                <span class="calc-result-label">Capacity (fVuo)</span>
+                                <span class="calc-result-value" id="res-fvuo">0 <span class="calc-result-unit">kN</span></span>
+                            </div>
+                            <div class="calc-result-row">
+                                <span class="calc-result-label">Max Capacity (fVumax)</span>
+                                <span class="calc-result-value" id="res-fvumax">0 <span class="calc-result-unit">kN</span></span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <section class="calc-card full-width calc-total-card">
+                    <div class="calc-card-title" style="justify-content: center;">
+                        Status
+                    </div>
+                    <div class="calc-total-value" id="ps-status" style="font-size: 2.5rem; letter-spacing: 0;">OK</div>
+                    <p class="calc-total-unit" id="ps-status-desc">No shear reinforcement required</p>
+                </section>
+            </div>
+        `;
+
+        const inputs = container.querySelectorAll('input');
+        inputs.forEach(input => input.addEventListener('input', calculatePS));
+
+        const btns = container.querySelectorAll('.segment-btn');
+        let currentType = 'internal';
+        btns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                btns.forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                currentType = e.target.dataset.type;
+                calculatePS();
+            });
+        });
+
+        function calculatePS() {
+            const dimX = parseFloat(document.getElementById('ps-dim-x').value) || 0;
+            const dimY = parseFloat(document.getElementById('ps-dim-y').value) || 0;
+            const depth = parseFloat(document.getElementById('ps-depth').value) || 0;
+            const cover = parseFloat(document.getElementById('ps-cover').value) || 0;
+            const fc = parseFloat(document.getElementById('ps-fc').value) || 0;
+            const fcp = parseFloat(document.getElementById('ps-fcp').value) || 0;
+            
+            const v = parseFloat(document.getElementById('ps-v').value) || 0;
+            const mx = parseFloat(document.getElementById('ps-mx').value) || 0;
+            const my = parseFloat(document.getElementById('ps-my').value) || 0;
+            const bar3 = parseFloat(document.getElementById('ps-bar-3').value) || 0;
+            const bar4 = parseFloat(document.getElementById('ps-bar-4').value) || 0;
+
+            const do_eff = depth - cover - Math.max(bar3, bar4);
+            
+            let u = 0;
+            if (currentType === 'internal') {
+                u = 2 * (dimX + dimY) + Math.PI * do_eff;
+            } else if (currentType === 'edge') {
+                u = 2 * dimX + dimY + (Math.PI / 2) * do_eff;
+            } else if (currentType === 'corner') {
+                u = dimX + dimY + (Math.PI / 4) * do_eff;
+            }
+
+            const fcv = 0.17 * Math.sqrt(fc) + 0.3 * fcp;
+            const phi = 0.75; // AS3600 capacity reduction factor
+            
+            const fVuo = phi * fcv * u * do_eff / 1000;
+            const fVumax = 0.2 * fc * u * do_eff / 1000 * phi;
+            
+            // Simplified M*v calculation for the demo
+            const M_v = Math.sqrt(mx*mx + my*my);
+            const m_factor = 1 + (M_v * 1000 / (v * Math.max(dimX, dimY) || 1));
+            const fVu = v * Math.min(m_factor, 1.5); // Cap to 1.5 for basic estimation
+
+            document.getElementById('res-do').innerHTML = `${Math.max(0, do_eff).toFixed(0)} <span class="calc-result-unit">mm</span>`;
+            document.getElementById('res-u').innerHTML = `${Math.max(0, u).toFixed(0)} <span class="calc-result-unit">mm</span>`;
+            document.getElementById('res-fcv').innerHTML = `${Math.max(0, fcv).toFixed(2)} <span class="calc-result-unit">MPa</span>`;
+            
+            document.getElementById('res-fvu').innerHTML = `${fVu.toFixed(0)} <span class="calc-result-unit">kN</span>`;
+            document.getElementById('res-fvuo').innerHTML = `${fVuo.toFixed(0)} <span class="calc-result-unit">kN</span>`;
+            document.getElementById('res-fvumax').innerHTML = `${fVumax.toFixed(0)} <span class="calc-result-unit">kN</span>`;
+
+            const statusEl = document.getElementById('ps-status');
+            const statusDescEl = document.getElementById('ps-status-desc');
+            
+            if (fVu > fVumax) {
+                statusEl.innerText = 'FAIL';
+                statusEl.style.color = '#ef4444';
+                statusDescEl.innerText = 'Exceeds maximum allowable capacity (V > Vumax)';
+            } else if (fVu > fVuo) {
+                statusEl.innerText = 'REO REQ';
+                statusEl.style.color = 'var(--accent-warning)';
+                statusDescEl.innerText = 'Shear reinforcement is required';
+            } else {
+                statusEl.innerText = 'OK';
+                statusEl.style.color = 'var(--accent-success)';
+                statusDescEl.innerText = 'No shear reinforcement required';
+            }
+        }
+        
+        calculatePS();
     }
 
     // ─── Public API ───
