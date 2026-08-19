@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PT Design - Engineering Tools Dashboard</title>
-    <meta name="description" content="Dashboard phần mềm tính toán kết cấu Post-Tensioning">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏗️</text></svg>">
+    <title>APEX Southern Cross - Engineering Tools</title>
+    <meta name="description" content="APEX Southern Cross Engineering - Structural & PT Design Tools">
+    <link rel="icon" type="image/png" href="img/apex_logo.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -15,8 +15,9 @@
     <!-- ===== VIDEO INTRO OVERLAY ===== -->
     <div class="intro-overlay" id="introOverlay">
         <video class="intro-video" id="introVideo" autoplay muted playsinline>
-            <source src="intro.mp4" type="video/mp4">
+            <source src="assets/intro.mp4" type="video/mp4">
         </video>
+
         <button class="intro-skip" id="introSkip" onclick="App.skipIntro()">
             Bỏ qua
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
@@ -27,12 +28,8 @@
 
         <!-- Top Navigation -->
         <nav class="top-nav">
-            <a class="nav-brand" onclick="App.goHome()" id="navBrand">
-                <div class="nav-logo">PT</div>
-                <div>
-                    <div class="nav-title">PT Design</div>
-                    <div class="nav-subtitle">Engineering Tools</div>
-                </div>
+            <a class="nav-brand" onclick="App.goHome()" id="navBrand" title="APEX Southern Cross Engineering">
+                <img src="img/apex_logo.png" alt="APEX Southern Cross Engineering" class="nav-brand-logo">
             </a>
             <button class="nav-back" id="navBack" onclick="App.goHome()">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
@@ -66,7 +63,7 @@
 
         <!-- Footer -->
         <footer class="app-footer">
-            <p class="footer-text">PT Design © 2026 — Post-Tensioning Structural Tools</p>
+            <p class="footer-text">APEX Southern Cross Engineering © 2026 — Structural &amp; Post-Tensioning Tools</p>
         </footer>
 
     </div>
