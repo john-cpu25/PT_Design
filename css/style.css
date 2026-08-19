@@ -160,6 +160,63 @@ body {
     flex-direction: column;
 }
 
+/* ── Tool-Active Mode: single-screen, no page scroll ── */
+body.tool-active {
+    overflow: hidden;
+    height: 100vh;
+}
+
+body.tool-active .app-footer {
+    display: none;
+}
+
+body.tool-active .app-shell {
+    height: 100vh;
+    overflow: hidden;
+}
+
+body.tool-active .main-content {
+    flex: 1;
+    overflow: hidden;
+    padding: 16px 32px;
+    max-width: 1400px;
+}
+
+body.tool-active .tool-header {
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+}
+
+body.tool-active .tool-header-icon {
+    width: 36px;
+    height: 36px;
+}
+
+body.tool-active .tool-header-info h2 {
+    font-size: 1.15rem;
+}
+
+body.tool-active .tool-header-info p {
+    font-size: 0.78rem;
+}
+
+body.tool-active .calc-card {
+    padding: 14px 18px;
+}
+
+body.tool-active .calc-card-title {
+    margin-bottom: 10px;
+    font-size: 0.82rem;
+}
+
+body.tool-active .st-split {
+    gap: 14px;
+}
+
+body.tool-active .segment-control {
+    margin-bottom: 12px;
+}
+
 /* ---------- Top Navigation ---------- */
 .top-nav {
     background: var(--bg-primary);
@@ -940,12 +997,46 @@ body {
     border: 1px solid var(--border-light);
     border-radius: var(--radius-sm);
     background: #fff;
-    font-weight: 600;
+    font-weight: 700;
     text-align: right;
     color: #1e40af;
+    font-family: inherit;
+    cursor: pointer;
 }
 
-.st-input-table input[type="number"]:focus {
+.st-input-table select {
+    text-align: left;
+    appearance: auto;
+}
+
+.st-input-table input[type="number"]:focus,
+.st-input-table select:focus {
+    border-color: var(--accent-primary);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.15);
+}
+
+/* ── Global form element unification ── */
+#toolBody select,
+#toolBody input[type="number"],
+#toolBody input[type="text"] {
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #1e40af;
+    padding: 4px 6px;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-sm);
+    background: #fff;
+}
+
+#toolBody select {
+    cursor: pointer;
+}
+
+#toolBody select:focus,
+#toolBody input[type="number"]:focus,
+#toolBody input[type="text"]:focus {
     border-color: var(--accent-primary);
     outline: none;
     box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.15);

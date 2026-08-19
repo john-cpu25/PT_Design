@@ -177,7 +177,8 @@ const App = (() => {
         tool.render(document.getElementById('toolBody'));
 
         // Scroll to top
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        document.body.classList.add('tool-active');
+        window.scrollTo({ top: 0 });
     }
 
     function goHome() {
@@ -194,7 +195,8 @@ const App = (() => {
         // Re-render so animations replay
         renderDashboard();
 
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        document.body.classList.remove('tool-active');
+        window.scrollTo({ top: 0 });
     }
 
     // ─── PT Spacing & Rate Calculator ───
@@ -758,7 +760,7 @@ const App = (() => {
                                     <tr><td>
                                         <label style="display:inline">Strut Type</label>
                                     </td><td colspan="2">
-                                        <select id="st-strut-type" style="width:100%">
+                                        <select id="st-strut-type">
                                             <option value="prismatic">Prismatic Strut</option>
                                             <option value="fan-shaped">Fan-shaped Compression field</option>
                                             <option value="bottle-shaped">Bottle-shaped Compression field</option>
@@ -804,7 +806,7 @@ const App = (() => {
                                     <tr><td>T = Rh (kN)</td><td class="st-out-val" id="st-res-Rh">4212.56</td><td class="st-formula">= Rv × d / Deff</td></tr>
                                     <tr><td>φst</td><td class="st-out-val">0.85</td><td class="st-formula">AS3600 Table 2.2.2</td></tr>
                                     <tr class="st-highlight-row"><td>Ah (mm²)</td><td class="st-out-val st-highlight" id="st-res-Ah">9911.89</td><td class="st-formula" id="st-formula-Ah">= (Rh×1000 − φ·Ap·(σpe+Δσp)) / (φ·fsy)</td></tr>
-                                    <tr><td>Choose N (bar dia)</td><td><select id="st-bar-dia" style="width:100%; padding:4px 6px; font-size:0.85rem; font-weight:600; text-align:center; border:1px solid var(--border-light); border-radius:var(--radius-sm); background:#fefce8;">
+                                    <tr><td>Choose N (bar dia)</td><td><select id="st-bar-dia">
                                         <option value="16">16</option>
                                         <option value="20">20</option>
                                         <option value="24">24</option>
@@ -824,7 +826,7 @@ const App = (() => {
                                     <tr class="st-highlight-row"><td>φ·Strut Cap. (kN)</td><td class="st-out-val st-highlight" id="st-res-fstrut">4719</td><td class="st-formula">= φ × βs × 0.9 × f'c × Ac / 1000</td></tr>
                                     <tr class="st-highlight-row"><td>Force C (kN)</td><td class="st-out-val st-highlight" id="st-res-forceC">5690</td><td class="st-formula">= Rv / sin(θ)</td></tr>
                                     <tr id="st-asc-row" style="display:none;"><td>Asc required (mm²)</td><td class="st-out-val" id="st-res-Asc">0</td><td class="st-formula">= (C − φ·Cap) × 1000 / fsc</td></tr>
-                                    <tr id="st-asc-bar-row" style="display:none;"><td>Choose N (bar dia)</td><td><select id="st-asc-bar-dia" style="width:100%; padding:4px 6px; font-size:0.85rem; font-weight:600; text-align:center; border:1px solid var(--border-light); border-radius:var(--radius-sm); background:#fefce8;">
+                                    <tr id="st-asc-bar-row" style="display:none;"><td>Choose N (bar dia)</td><td><select id="st-asc-bar-dia">
                                         <option value="16">16</option>
                                         <option value="20">20</option>
                                         <option value="24">24</option>
@@ -1436,20 +1438,20 @@ const App = (() => {
             const tr = document.createElement('tr');
             tr.innerHTML = `
                 <td>
-                    <input type="text" class="ir-sec-name" data-idx="${idx}" value="${sec.name}" style="width:100%; padding:4px 8px; font-weight:700; color:#1e40af; border:1px solid var(--border-light); border-radius:var(--radius-sm);">
+                    <input type="text" class="ir-sec-name" data-idx="${idx}" value="${sec.name}" style="width:100%;">
                 </td>
                 <td>
                     <div style="display:flex; gap:6px; align-items:center;">
-                        <input type="number" class="ir-long-count" data-idx="${idx}" value="${sec.longCount}" min="1" max="50" style="width:50px; padding:4px 6px; font-weight:700; color:#1e40af; text-align:center; border:1px solid var(--border-light); border-radius:var(--radius-sm);">
-                        <select class="ir-long-dia" data-idx="${idx}" style="padding:4px 6px; font-weight:700; color:#1e40af; border:1px solid var(--border-light); border-radius:var(--radius-sm);">
+                        <input type="number" class="ir-long-count" data-idx="${idx}" value="${sec.longCount}" min="1" max="50" style="width:50px; text-align:center;">
+                        <select class="ir-long-dia" data-idx="${idx}">
                             ${[12, 16, 20, 24, 28, 32, 36, 40].map(d => `<option value="${d}" ${d === sec.longDia ? 'selected' : ''}>N${d}</option>`).join('')}
                         </select>
                     </div>
                 </td>
                 <td>
                     <div style="display:flex; gap:6px; align-items:center;">
-                        <input type="number" class="ir-lat-count" data-idx="${idx}" value="${sec.latCount}" min="1" max="50" style="width:50px; padding:4px 6px; font-weight:700; color:#1e40af; text-align:center; border:1px solid var(--border-light); border-radius:var(--radius-sm);">
-                        <select class="ir-lat-dia" data-idx="${idx}" style="padding:4px 6px; font-weight:700; color:#1e40af; border:1px solid var(--border-light); border-radius:var(--radius-sm);">
+                        <input type="number" class="ir-lat-count" data-idx="${idx}" value="${sec.latCount}" min="1" max="50" style="width:50px; text-align:center;">
+                        <select class="ir-lat-dia" data-idx="${idx}">
                             ${[12, 16, 20, 24, 28, 32, 36, 40].map(d => `<option value="${d}" ${d === sec.latDia ? 'selected' : ''}>N${d}</option>`).join('')}
                         </select>
                     </div>
