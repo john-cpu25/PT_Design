@@ -393,94 +393,94 @@ const App = (() => {
                 <button class="segment-btn" data-type="corner">Corner Column</button>
             </div>
 
-            <div class="calc-grid">
-                <!-- Diagram Card -->
-                <section class="calc-card full-width">
-                    <div class="calc-card-title">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
-                        Shear Perimeter Diagram
-                    </div>
-                    <div id="ps-diagram-container" style="height: 240px; display: flex; justify-content: center; align-items: center; background: #fff; border: 1px solid var(--border-light); border-radius: var(--radius-md); overflow: hidden;">
-                        <!-- SVG injected here -->
-                    </div>
-                </section>
+            <div class="st-split">
+                <!-- LEFT: Diagram + Inputs -->
+                <div class="st-left">
+                    <section class="calc-card">
+                        <div class="calc-card-title">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+                            Shear Perimeter Diagram
+                        </div>
+                        <div id="ps-diagram-container" style="height: 200px; display: flex; justify-content: center; align-items: center; background: #fff; border: 1px solid var(--border-light); border-radius: var(--radius-md); overflow: hidden;">
+                            <!-- SVG injected here -->
+                        </div>
+                    </section>
 
-                <!-- Geometry -->
-                <section class="calc-card">
-                    <div class="calc-card-title">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/></svg>
-                        Geometry & Properties
-                    </div>
-                    <div class="calc-inputs">
-                        <div class="calc-field">
-                            <label for="ps-dim-x">Col Dim X (mm)</label>
-                            <input type="number" id="ps-dim-x" value="300" step="10">
+                    <section class="calc-card">
+                        <div class="calc-card-title">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/></svg>
+                            Geometry & Properties
                         </div>
-                        <div class="calc-field">
-                            <label for="ps-dim-y">Col Dim Y (mm)</label>
-                            <input type="number" id="ps-dim-y" value="300" step="10">
+                        <div class="calc-inputs" style="grid-template-columns: repeat(4, 1fr);">
+                            <div class="calc-field">
+                                <label for="ps-dim-x">Col X (mm)</label>
+                                <input type="number" id="ps-dim-x" value="300" step="10">
+                            </div>
+                            <div class="calc-field">
+                                <label for="ps-dim-y">Col Y (mm)</label>
+                                <input type="number" id="ps-dim-y" value="300" step="10">
+                            </div>
+                            <div class="calc-field">
+                                <label for="ps-depth">Slab D (mm)</label>
+                                <input type="number" id="ps-depth" value="250" step="10">
+                            </div>
+                            <div class="calc-field">
+                                <label for="ps-cover">Cover (mm)</label>
+                                <input type="number" id="ps-cover" value="30" step="1">
+                            </div>
+                            <div class="calc-field">
+                                <label for="ps-fc">f'c (MPa)</label>
+                                <input type="number" id="ps-fc" value="40" step="1">
+                            </div>
+                            <div class="calc-field">
+                                <label for="ps-fcp">fcp (MPa)</label>
+                                <input type="number" id="ps-fcp" value="1.0" step="0.1">
+                            </div>
+                            <div class="calc-field" style="grid-column: span 2;">
+                                <label for="ps-reduction">Perim. Reduc. (mm)</label>
+                                <input type="number" id="ps-reduction" value="0" step="10">
+                            </div>
                         </div>
-                        <div class="calc-field">
-                            <label for="ps-depth">Slab Depth (mm)</label>
-                            <input type="number" id="ps-depth" value="250" step="10">
-                        </div>
-                        <div class="calc-field">
-                            <label for="ps-cover">Cover (mm)</label>
-                            <input type="number" id="ps-cover" value="30" step="1">
-                        </div>
-                        <div class="calc-field">
-                            <label for="ps-fc">f'c (MPa)</label>
-                            <input type="number" id="ps-fc" value="40" step="1">
-                        </div>
-                        <div class="calc-field">
-                            <label for="ps-fcp">fcp (MPa)</label>
-                            <input type="number" id="ps-fcp" value="1.0" step="0.1">
-                        </div>
-                        <div class="calc-field" style="grid-column: span 2;">
-                            <label for="ps-reduction">Perimeter Reduction (mm)</label>
-                            <input type="number" id="ps-reduction" value="0" step="10" placeholder="e.g. 200">
-                        </div>
-                    </div>
-                </section>
+                    </section>
 
-                <!-- Loads & Rebar -->
-                <section class="calc-card">
-                    <div class="calc-card-title">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"/><path d="m17 22-5-5-5 5"/><path d="m17 2-5 5-5-5"/></svg>
-                        Loads & Reinforcement
-                    </div>
-                    <div class="calc-inputs">
-                        <div class="calc-field">
-                            <label for="ps-v">V* (kN)</label>
-                            <input type="number" id="ps-v" value="1000" step="10">
+                    <section class="calc-card">
+                        <div class="calc-card-title">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"/><path d="m17 22-5-5-5 5"/><path d="m17 2-5 5-5-5"/></svg>
+                            Loads & Reinforcement
                         </div>
-                        <div class="calc-field">
-                            <label for="ps-mx">M*x (kNm)</label>
-                            <input type="number" id="ps-mx" value="50" step="1">
+                        <div class="calc-inputs" style="grid-template-columns: repeat(5, 1fr);">
+                            <div class="calc-field">
+                                <label for="ps-v">V* (kN)</label>
+                                <input type="number" id="ps-v" value="1000" step="10">
+                            </div>
+                            <div class="calc-field">
+                                <label for="ps-mx">M*x (kNm)</label>
+                                <input type="number" id="ps-mx" value="50" step="1">
+                            </div>
+                            <div class="calc-field">
+                                <label for="ps-my">M*y (kNm)</label>
+                                <input type="number" id="ps-my" value="50" step="1">
+                            </div>
+                            <div class="calc-field">
+                                <label for="ps-bar-3">3rd Bar Ø</label>
+                                <input type="number" id="ps-bar-3" value="24" step="1">
+                            </div>
+                            <div class="calc-field">
+                                <label for="ps-bar-4">4th Bar Ø</label>
+                                <input type="number" id="ps-bar-4" value="24" step="1">
+                            </div>
                         </div>
-                        <div class="calc-field">
-                            <label for="ps-my">M*y (kNm)</label>
-                            <input type="number" id="ps-my" value="50" step="1">
-                        </div>
-                        <div class="calc-field">
-                            <label for="ps-bar-3">3rd Layer Bar Ø</label>
-                            <input type="number" id="ps-bar-3" value="24" step="1">
-                        </div>
-                        <div class="calc-field">
-                            <label for="ps-bar-4">4th Layer Bar Ø</label>
-                            <input type="number" id="ps-bar-4" value="24" step="1">
-                        </div>
-                    </div>
-                </section>
+                    </section>
+                </div>
 
-                <!-- Results -->
-                <section class="calc-card full-width">
-                    <div class="calc-card-title">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                        Results Summary
-                    </div>
-                    <div class="calc-output" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0 40px; border-top: none; padding-top: 0; margin-top: 0;">
-                        <div>
+                <!-- RIGHT: Results + Status -->
+                <div class="st-right">
+                    <section class="calc-card">
+                        <div class="calc-card-title">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                            Results Summary
+                        </div>
+                        <div class="calc-output" style="border-top: none; padding-top: 0; margin-top: 0;">
                             <div class="calc-result-row">
                                 <span class="calc-result-label">Effective Depth (do)</span>
                                 <span class="calc-result-value" id="res-do">0 <span class="calc-result-unit">mm</span></span>
@@ -493,8 +493,7 @@ const App = (() => {
                                 <span class="calc-result-label">Shear Strength (fcv)</span>
                                 <span class="calc-result-value" id="res-fcv">0.00 <span class="calc-result-unit">MPa</span></span>
                             </div>
-                        </div>
-                        <div>
+                            <div style="border-top: 1px solid var(--border-light); margin: 8px 0;"></div>
                             <div class="calc-result-row">
                                 <span class="calc-result-label">Design Load (fVu)</span>
                                 <span class="calc-result-value" id="res-fvu">0 <span class="calc-result-unit">kN</span></span>
@@ -508,16 +507,16 @@ const App = (() => {
                                 <span class="calc-result-value" id="res-fvumax">0 <span class="calc-result-unit">kN</span></span>
                             </div>
                         </div>
-                    </div>
-                </section>
-                
-                <section class="calc-card full-width calc-total-card">
-                    <div class="calc-card-title" style="justify-content: center;">
-                        Status
-                    </div>
-                    <div class="calc-total-value" id="ps-status" style="font-size: 2.5rem; letter-spacing: 0;">OK</div>
-                    <p class="calc-total-unit" id="ps-status-desc">No shear reinforcement required</p>
-                </section>
+                    </section>
+                    
+                    <section class="calc-card calc-total-card">
+                        <div class="calc-card-title" style="justify-content: center;">
+                            Status
+                        </div>
+                        <div class="calc-total-value" id="ps-status" style="font-size: 2.5rem; letter-spacing: 0;">OK</div>
+                        <p class="calc-total-unit" id="ps-status-desc">No shear reinforcement required</p>
+                    </section>
+                </div>
             </div>
         `;
 
@@ -1191,211 +1190,121 @@ const App = (() => {
 
     function renderIntegrityReinforcement(container) {
         container.innerHTML = `
-            <div class="st-split" style="margin-bottom: 24px;">
-                <!-- LEFT: Code Parameters & Input -->
-                <div class="st-left">
-                    <section class="calc-card">
-                        <div class="calc-card-title" style="color:#059669; font-weight:800;">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/></svg>
+            <div style="display:grid; grid-template-columns: 320px 1fr; gap:12px; height: calc(100vh - 130px); max-height: calc(100vh - 130px);">
+                <!-- LEFT PANEL: Input + Sets + Ld -->
+                <div style="display:flex; flex-direction:column; gap:6px; overflow-y:auto; min-height:0;">
+                    <section class="calc-card" style="padding:10px 14px;">
+                        <div class="calc-card-title" style="color:#059669; font-weight:800; margin-bottom:6px; font-size:0.75rem;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/></svg>
                             INPUT & CODE PARAMETERS
                         </div>
-                        <table class="st-table st-input-table">
-                            <colgroup><col style="width:40%"><col style="width:25%"><col style="width:35%"></colgroup>
+                        <table class="st-table st-input-table" style="font-size:0.74rem;">
+                            <colgroup><col style="width:40%"><col style="width:35%"><col style="width:25%"></colgroup>
                             <tbody>
-                                <tr class="st-section-header"><td colspan="3">Design Load & Material</td></tr>
-                                <tr>
-                                    <td>Fz — Column Reaction (kN)</td>
-                                    <td><input type="number" id="ir-Fz" value="520" step="10"></td>
-                                    <td class="st-formula st-note">vertical reaction load</td>
-                                </tr>
-                                <tr>
-                                    <td>φ — Capacity Factor</td>
-                                    <td><input type="number" id="ir-phi" value="0.70" step="0.05"></td>
-                                    <td class="st-formula">AS3600 Cl 9.2</td>
-                                </tr>
-                                <tr>
-                                    <td>fsy — Steel Yield (MPa)</td>
-                                    <td><input type="number" id="ir-fsy" value="500" step="10"></td>
-                                    <td class="st-formula">Standard yield</td>
-                                </tr>
+                                <tr><td>Fz (kN)</td><td><input type="number" id="ir-Fz" value="520" step="10"></td><td class="st-formula st-note">reaction</td></tr>
+                                <tr><td>φ</td><td><input type="number" id="ir-phi" value="0.70" step="0.05"></td><td class="st-formula">Cl 9.2</td></tr>
+                                <tr><td>fsy (MPa)</td><td><input type="number" id="ir-fsy" value="500" step="10"></td><td class="st-formula">yield</td></tr>
                                 <tr class="st-highlight-row" style="background:#fefce8; border-top:2px solid var(--accent-primary);">
-                                    <td style="font-weight:800; color:#1e40af;">Reo Required — As,req (mm²)</td>
-                                    <td class="st-out-val st-highlight" id="ir-res-Asreq" style="font-size:1.15rem; font-weight:800; color:#1e40af;">2971</td>
-                                    <td class="st-formula" style="font-weight:600;">= 2 × Fz × 1000 / (φ × fsy)</td>
+                                    <td style="font-weight:800; color:#1e40af;">As,req (mm²)</td>
+                                    <td class="st-out-val st-highlight" id="ir-res-Asreq" style="font-size:1rem;">2971</td>
+                                    <td class="st-formula" style="font-size:0.58rem;">= 2×Fz×1000/(φ×fsy)</td>
                                 </tr>
                             </tbody>
                         </table>
                     </section>
 
-                    <!-- Summary Note Card -->
-                    <section class="calc-card calc-total-card">
-                        <div class="calc-card-title" style="justify-content: center; color:#0284c7;">AS3600-2018 Cl 9.2 Requirement</div>
-                        <div class="calc-total-value" style="font-size: 1.15rem; letter-spacing: 0; color:#1e40af; font-weight:700; text-align:center;">
-                            Continuous bottom rebar passing through column core
+                    <!-- AS3600 Note -->
+                    <section class="calc-card" style="padding:8px 12px; background: linear-gradient(135deg, #EEF2FF, #F5F3FF); text-align:center;">
+                        <div style="font-size:0.68rem; font-weight:700; color:#0284c7; margin-bottom:4px;">AS3600-2018 Cl 9.2</div>
+                        <div style="font-size:0.72rem; font-weight:700; color:#1e40af;">Continuous bottom rebar through column core</div>
+                        <div style="font-size:0.62rem; color:#6b7280; margin-top:2px;">Tying force = 2 × Fz / φ</div>
+                    </section>
+
+                    <!-- 4 Sets compact -->
+                    <section class="calc-card" style="padding:8px 12px;">
+                        <div style="font-size:0.68rem; font-weight:800; color:#4f46e5; margin-bottom:6px;">4 COLUMN CONNECTION SETS</div>
+                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px;">
+                            <div style="background:var(--bg-secondary); border:1px solid var(--border-light); border-radius:6px; padding:6px; text-align:center;">
+                                <svg viewBox="0 0 140 110" width="60" height="45"><rect x="52" y="24" width="36" height="62" fill="#bfdbfe" fill-opacity="0.6" stroke="#2563eb" stroke-width="1.5" rx="2" /><line x1="62" y1="6" x2="62" y2="104" stroke="#1d4ed8" stroke-width="2.5" /><line x1="78" y1="6" x2="78" y2="104" stroke="#1d4ed8" stroke-width="2.5" /><line x1="8" y1="40" x2="132" y2="40" stroke="#1d4ed8" stroke-width="2.5" /><line x1="8" y1="55" x2="132" y2="55" stroke="#1d4ed8" stroke-width="2.5" /><line x1="8" y1="70" x2="132" y2="70" stroke="#1d4ed8" stroke-width="2.5" /></svg>
+                                <div style="font-weight:800; color:#4f46e5; font-size:0.65rem;">SET 1: 4 SIDES</div>
+                                <div style="font-size:0.58rem; color:#1e40af;">2×N<sub>L</sub>A + 2×N<sub>T</sub>A</div>
+                            </div>
+                            <div style="background:var(--bg-secondary); border:1px solid var(--border-light); border-radius:6px; padding:6px; text-align:center;">
+                                <svg viewBox="0 0 140 110" width="60" height="45"><rect x="52" y="24" width="36" height="62" fill="#bfdbfe" fill-opacity="0.6" stroke="#2563eb" stroke-width="1.5" rx="2" /><line x1="62" y1="6" x2="62" y2="86" stroke="#1d4ed8" stroke-width="2.5" /><line x1="78" y1="6" x2="78" y2="86" stroke="#1d4ed8" stroke-width="2.5" /><line x1="8" y1="40" x2="132" y2="40" stroke="#1d4ed8" stroke-width="2.5" /><line x1="8" y1="55" x2="132" y2="55" stroke="#1d4ed8" stroke-width="2.5" /><line x1="8" y1="70" x2="132" y2="70" stroke="#1d4ed8" stroke-width="2.5" /></svg>
+                                <div style="font-weight:800; color:#0284c7; font-size:0.65rem;">SET 2: 3 LONG</div>
+                                <div style="font-size:0.58rem; color:#1e40af;">1×N<sub>L</sub>A + 2×N<sub>T</sub>A</div>
+                            </div>
+                            <div style="background:var(--bg-secondary); border:1px solid var(--border-light); border-radius:6px; padding:6px; text-align:center;">
+                                <svg viewBox="0 0 140 110" width="60" height="45"><rect x="52" y="24" width="36" height="62" fill="#bfdbfe" fill-opacity="0.6" stroke="#2563eb" stroke-width="1.5" rx="2" /><line x1="62" y1="6" x2="62" y2="104" stroke="#1d4ed8" stroke-width="2.5" /><line x1="78" y1="6" x2="78" y2="104" stroke="#1d4ed8" stroke-width="2.5" /><line x1="52" y1="40" x2="132" y2="40" stroke="#1d4ed8" stroke-width="2.5" /><line x1="52" y1="55" x2="132" y2="55" stroke="#1d4ed8" stroke-width="2.5" /><line x1="52" y1="70" x2="132" y2="70" stroke="#1d4ed8" stroke-width="2.5" /></svg>
+                                <div style="font-weight:800; color:#d97706; font-size:0.65rem;">SET 3: 3 SHORT</div>
+                                <div style="font-size:0.58rem; color:#1e40af;">2×N<sub>L</sub>A + 1×N<sub>T</sub>A</div>
+                            </div>
+                            <div style="background:var(--bg-secondary); border:1px solid var(--border-light); border-radius:6px; padding:6px; text-align:center;">
+                                <svg viewBox="0 0 140 110" width="60" height="45"><rect x="52" y="24" width="36" height="62" fill="#bfdbfe" fill-opacity="0.6" stroke="#2563eb" stroke-width="1.5" rx="2" /><line x1="62" y1="6" x2="62" y2="86" stroke="#1d4ed8" stroke-width="2.5" /><line x1="78" y1="6" x2="78" y2="86" stroke="#1d4ed8" stroke-width="2.5" /><line x1="52" y1="40" x2="132" y2="40" stroke="#1d4ed8" stroke-width="2.5" /><line x1="52" y1="55" x2="132" y2="55" stroke="#1d4ed8" stroke-width="2.5" /><line x1="52" y1="70" x2="132" y2="70" stroke="#1d4ed8" stroke-width="2.5" /></svg>
+                                <div style="font-weight:800; color:#059669; font-size:0.65rem;">SET 4: 2 SIDES</div>
+                                <div style="font-size:0.58rem; color:#1e40af;">1×N<sub>L</sub>A + 1×N<sub>T</sub>A</div>
+                            </div>
                         </div>
-                        <div class="calc-total-unit" style="font-size:0.85rem; color:#6b7280; text-align:center; margin-top:4px;">
-                            Tensile tying force = 2 × Fz / φ to prevent progressive collapse
-                        </div>
+                    </section>
+
+                    <!-- Ld Table compact -->
+                    <section class="calc-card" style="padding:8px 12px;">
+                        <div style="font-size:0.68rem; font-weight:800; color:#0284c7; margin-bottom:4px;">DEVELOPMENT LENGTH (Ld)</div>
+                        <table class="st-table" style="text-align:center; font-size:0.7rem;">
+                            <thead>
+                                <tr><th>Bar</th><th>Area</th><th>Ld (mm)</th><th>Ext. (mm)</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><strong>N12</strong></td><td>113</td><td>960</td><td style="font-weight:700; color:#1e40af;">1000</td></tr>
+                                <tr><td><strong>N16</strong></td><td>201</td><td>1280</td><td style="font-weight:700; color:#1e40af;">1300</td></tr>
+                                <tr><td><strong>N20</strong></td><td>314</td><td>1600</td><td style="font-weight:700; color:#1e40af;">1600</td></tr>
+                                <tr><td><strong>N24</strong></td><td>452</td><td>1920</td><td style="font-weight:700; color:#1e40af;">2000</td></tr>
+                                <tr><td><strong>N28</strong></td><td>616</td><td>2240</td><td style="font-weight:700; color:#1e40af;">2300</td></tr>
+                                <tr><td><strong>N32</strong></td><td>804</td><td>2560</td><td style="font-weight:700; color:#1e40af;">2600</td></tr>
+                                <tr><td><strong>N36</strong></td><td>1018</td><td>2880</td><td style="font-weight:700; color:#1e40af;">2900</td></tr>
+                                <tr><td><strong>N40</strong></td><td>1257</td><td>2880</td><td style="font-weight:700; color:#1e40af;">2900</td></tr>
+                            </tbody>
+                        </table>
+                        <div style="font-size:0.6rem; color:#9ca3af; margin-top:4px;">* Ld = 2 × 40 × db</div>
                     </section>
                 </div>
 
-                <!-- RIGHT: Development Length Table -->
-                <div class="st-right">
-                    <section class="calc-card">
-                        <div class="calc-card-title" style="color:#0284c7; font-weight:800;">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="20" x2="12" y2="4"/><polyline points="6 10 12 4 18 10"/></svg>
-                            DEVELOPMENT LENGTH PAST COLUMN FACE (Ld)
+                <!-- RIGHT PANEL: Section Schedule (scrollable) -->
+                <div style="display:flex; flex-direction:column; min-height:0;">
+                    <section class="calc-card" style="flex:1; display:flex; flex-direction:column; min-height:0; padding:10px 14px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                            <div class="calc-card-title" style="color:#1e40af; font-weight:800; margin-bottom:0; font-size:0.75rem;">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                                COLUMN SECTIONS REINFORCEMENT SCHEDULE & INTEGRITY CHECK
+                            </div>
+                            <button class="btn btn-primary" id="ir-add-section-btn" style="padding:4px 12px; font-size:0.75rem; font-weight:600; display:flex; align-items:center; gap:6px;">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                                Add Section
+                            </button>
                         </div>
-                        <table class="st-table" style="text-align:center;">
-                            <thead>
-                                <tr style="border-bottom: 2px solid var(--accent-primary);">
-                                    <th style="text-align:center; font-size:0.75rem; text-transform:uppercase; letter-spacing:0.04em;">Bar Size</th>
-                                    <th style="text-align:center; font-size:0.75rem; text-transform:uppercase; letter-spacing:0.04em;">Bar Area (mm²)</th>
-                                    <th style="text-align:center; font-size:0.75rem; text-transform:uppercase; letter-spacing:0.04em;">Ld Required (mm)</th>
-                                    <th style="text-align:center; font-size:0.75rem; text-transform:uppercase; letter-spacing:0.04em;">Extension Past Face (mm)</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr><td style="text-align:center;"><strong>N12</strong></td><td style="text-align:center;">113</td><td style="text-align:center;">960</td><td style="text-align:center; font-weight:700; color:#1e40af;">1000</td></tr>
-                                <tr><td style="text-align:center;"><strong>N16</strong></td><td style="text-align:center;">201</td><td style="text-align:center;">1280</td><td style="text-align:center; font-weight:700; color:#1e40af;">1300</td></tr>
-                                <tr><td style="text-align:center;"><strong>N20</strong></td><td style="text-align:center;">314</td><td style="text-align:center;">1600</td><td style="text-align:center; font-weight:700; color:#1e40af;">1600</td></tr>
-                                <tr><td style="text-align:center;"><strong>N24</strong></td><td style="text-align:center;">452</td><td style="text-align:center;">1920</td><td style="text-align:center; font-weight:700; color:#1e40af;">2000</td></tr>
-                                <tr><td style="text-align:center;"><strong>N28</strong></td><td style="text-align:center;">616</td><td style="text-align:center;">2240</td><td style="text-align:center; font-weight:700; color:#1e40af;">2300</td></tr>
-                                <tr><td style="text-align:center;"><strong>N32</strong></td><td style="text-align:center;">804</td><td style="text-align:center;">2560</td><td style="text-align:center; font-weight:700; color:#1e40af;">2600</td></tr>
-                                <tr><td style="text-align:center;"><strong>N36</strong></td><td style="text-align:center;">1018</td><td style="text-align:center;">2880</td><td style="text-align:center; font-weight:700; color:#1e40af;">2900</td></tr>
-                                <tr><td style="text-align:center;"><strong>N40</strong></td><td style="text-align:center;">1257</td><td style="text-align:center;">2880</td><td style="text-align:center; font-weight:700; color:#1e40af;">2900</td></tr>
-                            </tbody>
-                        </table>
-                        <div style="font-size:0.75rem; color:#6b7280; margin-top:8px; font-style:italic;">
-                            * Ld = 2 × 40 × db (anchorage on both sides, rounded up to 100mm)
+
+                        <div style="flex:1; overflow-y:auto; min-height:0;">
+                            <table class="st-table" id="ir-sections-table" style="width:100%;">
+                                <thead style="position:sticky; top:0; z-index:1; background:var(--bg-card);">
+                                    <tr>
+                                        <th style="width:14%;">Section</th>
+                                        <th style="width:16%;">Longitudinal</th>
+                                        <th style="width:16%;">Latitude (Transverse)</th>
+                                        <th style="width:13%;">Set 1 (4-side)</th>
+                                        <th style="width:13%;">Set 2 (3-long)</th>
+                                        <th style="width:13%;">Set 3 (3-short)</th>
+                                        <th style="width:13%;">Set 4 (2-side)</th>
+                                        <th style="width:3%;"></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="ir-sections-body">
+                                    <!-- Rendered dynamically by JS -->
+                                </tbody>
+                            </table>
                         </div>
                     </section>
                 </div>
             </div>
-
-            <!-- Visual 4-Sets Explanation Cards -->
-            <section class="calc-card" style="margin-bottom: 24px;">
-                <div class="calc-card-title" style="color:#4f46e5; font-weight:800;">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-                    4 COLUMN CONNECTION SETS (AS3600-2018)
-                </div>
-
-                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:16px;">
-                    <!-- SET 1 -->
-                    <div style="background:var(--bg-secondary); border:1px solid var(--border-light); border-radius:var(--radius-md); padding:14px; text-align:center; display:flex; flex-direction:column; align-items:center;">
-                        <div style="background:#fff; border:1px solid var(--border-light); border-radius:var(--radius-md); padding:8px; margin-bottom:12px; width:100%; display:flex; justify-content:center; box-shadow:var(--shadow-sm);">
-                            <svg viewBox="0 0 140 110" width="120" height="95">
-                                <rect x="52" y="24" width="36" height="62" fill="#bfdbfe" fill-opacity="0.6" stroke="#2563eb" stroke-width="1.5" rx="2" />
-                                <line x1="62" y1="6" x2="62" y2="104" stroke="#1d4ed8" stroke-width="2.5" />
-                                <line x1="78" y1="6" x2="78" y2="104" stroke="#1d4ed8" stroke-width="2.5" />
-                                <line x1="8" y1="40" x2="132" y2="40" stroke="#1d4ed8" stroke-width="2.5" />
-                                <line x1="8" y1="55" x2="132" y2="55" stroke="#1d4ed8" stroke-width="2.5" />
-                                <line x1="8" y1="70" x2="132" y2="70" stroke="#1d4ed8" stroke-width="2.5" />
-                            </svg>
-                        </div>
-                        <div style="font-weight:800; color:#4f46e5; font-size:0.95rem; margin-bottom:4px;">SET 1: 4 SIDES</div>
-                        <div style="font-size:0.78rem; color:#6b7280; margin-bottom:8px;">Internal Column (Cột giữa)</div>
-                        <div style="font-size:0.82rem; font-weight:700; color:#1e40af; background:#fff; padding:6px 10px; border-radius:6px; border:1px solid var(--border-light); width:100%;">
-                            As = 2×N<sub>long</sub>×A<sub>b</sub> + 2×N<sub>lat</sub>×A<sub>b</sub>
-                        </div>
-                        <div style="font-size:0.75rem; color:#9ca3af; margin-top:6px;">2 passes in both directions</div>
-                    </div>
-
-                    <!-- SET 2 -->
-                    <div style="background:var(--bg-secondary); border:1px solid var(--border-light); border-radius:var(--radius-md); padding:14px; text-align:center; display:flex; flex-direction:column; align-items:center;">
-                        <div style="background:#fff; border:1px solid var(--border-light); border-radius:var(--radius-md); padding:8px; margin-bottom:12px; width:100%; display:flex; justify-content:center; box-shadow:var(--shadow-sm);">
-                            <svg viewBox="0 0 140 110" width="120" height="95">
-                                <rect x="52" y="24" width="36" height="62" fill="#bfdbfe" fill-opacity="0.6" stroke="#2563eb" stroke-width="1.5" rx="2" />
-                                <line x1="62" y1="6" x2="62" y2="86" stroke="#1d4ed8" stroke-width="2.5" />
-                                <line x1="78" y1="6" x2="78" y2="86" stroke="#1d4ed8" stroke-width="2.5" />
-                                <line x1="8" y1="40" x2="132" y2="40" stroke="#1d4ed8" stroke-width="2.5" />
-                                <line x1="8" y1="55" x2="132" y2="55" stroke="#1d4ed8" stroke-width="2.5" />
-                                <line x1="8" y1="70" x2="132" y2="70" stroke="#1d4ed8" stroke-width="2.5" />
-                            </svg>
-                        </div>
-                        <div style="font-weight:800; color:#0284c7; font-size:0.95rem; margin-bottom:4px;">SET 2: 3 SIDES (LONG)</div>
-                        <div style="font-size:0.78rem; color:#6b7280; margin-bottom:8px;">Edge Column - Long (Cột biên dài)</div>
-                        <div style="font-size:0.82rem; font-weight:700; color:#1e40af; background:#fff; padding:6px 10px; border-radius:6px; border:1px solid var(--border-light); width:100%;">
-                            As = 1×N<sub>long</sub>×A<sub>b</sub> + 2×N<sub>lat</sub>×A<sub>b</sub>
-                        </div>
-                        <div style="font-size:0.75rem; color:#9ca3af; margin-top:6px;">1 pass long + 2 passes lat</div>
-                    </div>
-
-                    <!-- SET 3 -->
-                    <div style="background:var(--bg-secondary); border:1px solid var(--border-light); border-radius:var(--radius-md); padding:14px; text-align:center; display:flex; flex-direction:column; align-items:center;">
-                        <div style="background:#fff; border:1px solid var(--border-light); border-radius:var(--radius-md); padding:8px; margin-bottom:12px; width:100%; display:flex; justify-content:center; box-shadow:var(--shadow-sm);">
-                            <svg viewBox="0 0 140 110" width="120" height="95">
-                                <rect x="52" y="24" width="36" height="62" fill="#bfdbfe" fill-opacity="0.6" stroke="#2563eb" stroke-width="1.5" rx="2" />
-                                <line x1="62" y1="6" x2="62" y2="104" stroke="#1d4ed8" stroke-width="2.5" />
-                                <line x1="78" y1="6" x2="78" y2="104" stroke="#1d4ed8" stroke-width="2.5" />
-                                <line x1="52" y1="40" x2="132" y2="40" stroke="#1d4ed8" stroke-width="2.5" />
-                                <line x1="52" y1="55" x2="132" y2="55" stroke="#1d4ed8" stroke-width="2.5" />
-                                <line x1="52" y1="70" x2="132" y2="70" stroke="#1d4ed8" stroke-width="2.5" />
-                            </svg>
-                        </div>
-                        <div style="font-weight:800; color:#d97706; font-size:0.95rem; margin-bottom:4px;">SET 3: 3 SIDES (SHORT)</div>
-                        <div style="font-size:0.78rem; color:#6b7280; margin-bottom:8px;">Edge Column - Short (Cột biên ngắn)</div>
-                        <div style="font-size:0.82rem; font-weight:700; color:#1e40af; background:#fff; padding:6px 10px; border-radius:6px; border:1px solid var(--border-light); width:100%;">
-                            As = 2×N<sub>long</sub>×A<sub>b</sub> + 1×N<sub>lat</sub>×A<sub>b</sub>
-                        </div>
-                        <div style="font-size:0.75rem; color:#9ca3af; margin-top:6px;">2 passes long + 1 pass lat</div>
-                    </div>
-
-                    <!-- SET 4 -->
-                    <div style="background:var(--bg-secondary); border:1px solid var(--border-light); border-radius:var(--radius-md); padding:14px; text-align:center; display:flex; flex-direction:column; align-items:center;">
-                        <div style="background:#fff; border:1px solid var(--border-light); border-radius:var(--radius-md); padding:8px; margin-bottom:12px; width:100%; display:flex; justify-content:center; box-shadow:var(--shadow-sm);">
-                            <svg viewBox="0 0 140 110" width="120" height="95">
-                                <rect x="52" y="24" width="36" height="62" fill="#bfdbfe" fill-opacity="0.6" stroke="#2563eb" stroke-width="1.5" rx="2" />
-                                <line x1="62" y1="6" x2="62" y2="86" stroke="#1d4ed8" stroke-width="2.5" />
-                                <line x1="78" y1="6" x2="78" y2="86" stroke="#1d4ed8" stroke-width="2.5" />
-                                <line x1="52" y1="40" x2="132" y2="40" stroke="#1d4ed8" stroke-width="2.5" />
-                                <line x1="52" y1="55" x2="132" y2="55" stroke="#1d4ed8" stroke-width="2.5" />
-                                <line x1="52" y1="70" x2="132" y2="70" stroke="#1d4ed8" stroke-width="2.5" />
-                            </svg>
-                        </div>
-                        <div style="font-weight:800; color:#059669; font-size:0.95rem; margin-bottom:4px;">SET 4: 2 SIDES</div>
-                        <div style="font-size:0.78rem; color:#6b7280; margin-bottom:8px;">Corner Column (Cột góc)</div>
-                        <div style="font-size:0.82rem; font-weight:700; color:#1e40af; background:#fff; padding:6px 10px; border-radius:6px; border:1px solid var(--border-light); width:100%;">
-                            As = 1×N<sub>long</sub>×A<sub>b</sub> + 1×N<sub>lat</sub>×A<sub>b</sub>
-                        </div>
-                        <div style="font-size:0.75rem; color:#9ca3af; margin-top:6px;">1 pass in each direction</div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Bottom Section: Multi-Section Schedule & Check Table -->
-            <section class="calc-card">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
-                    <div class="calc-card-title" style="color:#1e40af; font-weight:800; margin-bottom:0;">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-                        COLUMN SECTIONS REINFORCEMENT SCHEDULE & INTEGRITY CHECK
-                    </div>
-                    <button class="btn btn-primary" id="ir-add-section-btn" style="padding:6px 14px; font-size:0.8rem; font-weight:600; display:flex; align-items:center; gap:6px;">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                        + Add Section
-                    </button>
-                </div>
-
-                <div style="overflow-x:auto;">
-                    <table class="st-table" id="ir-sections-table" style="min-width: 900px;">
-                        <thead>
-                            <tr>
-                                <th style="width:14%;">Section</th>
-                                <th style="width:16%;">Longitudinal</th>
-                                <th style="width:16%;">Latitude (Transverse)</th>
-                                <th style="width:13%;">Set 1 (4-side)</th>
-                                <th style="width:13%;">Set 2 (3-long)</th>
-                                <th style="width:13%;">Set 3 (3-short)</th>
-                                <th style="width:13%;">Set 4 (2-side)</th>
-                                <th style="width:5%;"></th>
-                            </tr>
-                        </thead>
-                        <tbody id="ir-sections-body">
-                            <!-- Rendered dynamically by JS -->
-                        </tbody>
-                    </table>
-                </div>
-            </section>
         `;
 
         // Event listeners
