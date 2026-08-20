@@ -112,6 +112,7 @@ const App = (() => {
     function showApp() {
         const appShell = document.getElementById('appShell');
         if (appShell) appShell.classList.remove('hidden');
+        document.body.classList.add('on-dashboard');
     }
 
     // ─── Navigation ───
@@ -154,6 +155,7 @@ const App = (() => {
 
         // Scroll to top
         document.body.classList.add('tool-active');
+        document.body.classList.remove('on-dashboard');
         window.scrollTo({ top: 0 });
     }
 
@@ -172,6 +174,7 @@ const App = (() => {
         renderDashboard(TOOLS);
 
         document.body.classList.remove('tool-active');
+        document.body.classList.add('on-dashboard');
         window.scrollTo({ top: 0 });
     }
 
