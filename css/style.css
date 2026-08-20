@@ -547,17 +547,16 @@ body.tool-active .calc-result-value {
 .tools-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 24px;
+    gap: 20px;
 }
 
 .tool-card {
-    background: var(--bg-card);
+    background: transparent;
     border: 1px solid var(--border-light);
     border-radius: var(--radius-xl);
-    padding: 32px;
     cursor: pointer;
     transition: var(--transition-normal);
-    box-shadow: var(--shadow-card);
+    box-shadow: none;
     position: relative;
     overflow: hidden;
     display: flex;
@@ -574,10 +573,12 @@ body.tool-active .calc-result-value {
     background: linear-gradient(90deg, var(--card-accent, var(--accent-primary)), var(--card-accent-end, #7C3AED));
     opacity: 0;
     transition: var(--transition-normal);
+    z-index: 2;
 }
 
 .tool-card:hover {
     transform: translateY(-6px);
+    background: var(--bg-card);
     box-shadow: var(--shadow-card-hover);
     border-color: rgba(79, 70, 229, 0.15);
 }
@@ -590,101 +591,56 @@ body.tool-active .calc-result-value {
     transform: translateY(-2px);
 }
 
-.tool-icon {
-    width: 64px;
-    height: 64px;
-    border-radius: var(--radius-lg);
+/* ── Card Thumbnail ── */
+.tool-card-thumb {
+    width: 100%;
+    height: 200px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.6rem;
-    margin-bottom: 20px;
-    transition: var(--transition-normal);
+    padding: 16px;
     position: relative;
+    overflow: hidden;
 }
 
-.tool-card:hover .tool-icon {
-    transform: scale(1.1);
+.tool-card-img {
+    width: 85%;
+    height: 85%;
+    object-fit: contain;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.tool-icon.icon-indigo {
-    background: var(--accent-primary-light);
-    color: var(--accent-primary);
+.tool-card:hover .tool-card-img {
+    transform: scale(1.06);
 }
 
-.tool-icon.icon-emerald {
-    background: var(--accent-success-light);
-    color: var(--accent-success);
-}
-
-.tool-icon.icon-amber {
-    background: var(--accent-warning-light);
-    color: var(--accent-warning);
-}
-
-.tool-icon.icon-sky {
-    background: var(--accent-info-light);
-    color: var(--accent-info);
+/* ── Card Footer (Name + Arrow) ── */
+.tool-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
 }
 
 .tool-name {
-    font-size: 1.15rem;
+    font-size: 1.05rem;
     font-weight: 700;
     color: var(--text-primary);
-    margin-bottom: 8px;
     letter-spacing: -0.01em;
 }
 
-.tool-desc {
-    font-size: 0.875rem;
-    color: var(--text-secondary);
-    line-height: 1.6;
-    margin-bottom: 20px;
-    flex: 1;
-}
-
-.tool-meta {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.tool-tag {
-    padding: 4px 12px;
-    border-radius: var(--radius-full);
-    font-size: 0.72rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-}
-
-.tag-structural {
-    background: var(--accent-primary-light);
-    color: var(--accent-primary);
-}
-
-.tag-design {
-    background: var(--accent-success-light);
-    color: var(--accent-success);
-}
-
-.tag-analysis {
-    background: var(--accent-warning-light);
-    color: var(--accent-warning);
-}
-
 .tool-arrow {
-    margin-left: auto;
     width: 36px;
     height: 36px;
     border-radius: var(--radius-full);
-    background: #F2F2F7; /* iOS standard light gray */
+    background: #F2F2F7;
     display: flex;
     align-items: center;
     justify-content: center;
     color: var(--accent-primary);
-    transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* bouncy iOS feel */
+    transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     box-shadow: 0 2px 5px rgba(0,0,0,0.04);
+    flex-shrink: 0;
 }
 
 .tool-card:hover .tool-arrow {
@@ -692,6 +648,32 @@ body.tool-active .calc-result-value {
     color: white;
     transform: scale(1.1);
     box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3);
+}
+
+/* ── Hover Overlay (Description) ── */
+.tool-card-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 16px 20px;
+    transform: translateY(100%);
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    border-top: 1px solid var(--border-light);
+    z-index: 1;
+}
+
+.tool-card:hover .tool-card-overlay {
+    transform: translateY(0);
+}
+
+.tool-card-overlay-text {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
 }
 
 /* ---------- Tool View ---------- */
@@ -735,23 +717,58 @@ body.tool-active .calc-result-value {
 }
 
 .tool-header-info h2 {
-    font-size: 1.4rem;
+    font-size: 1.5rem;
     font-weight: 700;
     color: var(--text-primary);
     letter-spacing: -0.02em;
 }
 
 .tool-header-info p {
-    font-size: 0.85rem;
+    font-size: 1rem;
     color: var(--text-secondary);
     margin-top: 2px;
+}
+
+.tool-header-info {
+    flex: 1;
+}
+
+.btn-export-pdf {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: var(--radius-md);
+    background: var(--accent-primary);
+    color: white;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(79, 70, 229, 0.25);
+}
+
+.btn-export-pdf:hover {
+    background: #4338CA;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.35);
+}
+
+.btn-export-pdf:active {
+    transform: translateY(0);
+}
+
+.btn-export-pdf svg {
+    flex-shrink: 0;
 }
 
 /* ---------- PT Calculator (White Theme) ---------- */
 .calc-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 24px;
+    gap: 10px;
 }
 
 .calc-card {
@@ -775,7 +792,7 @@ body.tool-active .calc-result-value {
     display: flex;
     align-items: center;
     gap: 10px;
-    font-size: 1rem;
+    font-size: 1.125rem;
     font-weight: 700;
     color: var(--accent-primary);
     margin-bottom: 20px;
@@ -812,7 +829,7 @@ body.tool-active .calc-result-value {
     border: 1px solid var(--border-light);
     border-radius: var(--radius-md);
     padding: 10px 14px;
-    font-size: 0.95rem;
+    font-size: 1rem;
     font-weight: 700;
     color: #1e40af;
     transition: var(--transition-fast);
@@ -853,7 +870,7 @@ body.tool-active .calc-result-value {
 }
 
 .calc-result-unit {
-    font-size: 0.7rem;
+    font-size: 0.75rem;
     color: var(--text-tertiary);
     font-weight: 500;
     margin-left: 4px;
@@ -875,7 +892,7 @@ body.tool-active .calc-result-value {
 }
 
 .calc-total-unit {
-    font-size: 0.85rem;
+    font-size: 0.875rem;
     color: var(--text-secondary);
     font-weight: 500;
 }
@@ -1002,10 +1019,6 @@ body.tool-active .calc-result-value {
 @media (max-width: 480px) {
     .calc-inputs {
         grid-template-columns: 1fr;
-    }
-
-    .tool-card {
-        padding: 24px;
     }
 }
 

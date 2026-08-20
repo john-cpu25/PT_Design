@@ -43,8 +43,8 @@
             <!-- ===== DASHBOARD VIEW ===== -->
             <div class="view active" id="dashboardView">
                 <div class="dashboard-header">
-                    <h1 class="dashboard-title">Engineering Tools</h1>
-                    <p class="dashboard-subtitle">Chọn phần mềm tính toán để bắt đầu</p>
+                    <h1 class="dashboard-title">Apex Southern Cross Design</h1>
+                    <p class="dashboard-subtitle">Choose a calculator software to get started</p>
                 </div>
 
                 <div class="tools-grid" id="toolsGrid">
@@ -68,6 +68,22 @@
 
     </div>
 
-    <script src="js/app.js?v=2"></script>
+    <!-- Dashboard -->
+    <script src="js/dashboard.js"></script>
+
+    <!-- Calculators -->
+    <script src="js/calculators/pt-spacing-rate.js"></script>
+    <script src="js/calculators/punching-shear.js"></script>
+    <script src="js/calculators/strut-and-tie.js"></script>
+    <script src="js/calculators/integrity-reinforcement.js"></script>
+    <script src="js/calculators/corbel-design.js"></script>
+
+    <!-- PDF Export Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.3/jspdf.plugin.autotable.min.js"></script>
+    <script src="js/pdf-export.js"></script>
+
+    <!-- App Core (loads last — references render functions above) -->
+    <script src="js/app.js"></script>
 </body>
 </html>
