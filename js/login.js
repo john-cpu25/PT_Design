@@ -30,6 +30,7 @@ const LoginUI = (() => {
       forgotPasswordBtn: document.getElementById('forgotPasswordBtn'),
       adminBypassBtn: document.getElementById('adminBypassBtn'),
       initPasswordsBtn: document.getElementById('initPasswordsBtn'),
+      loginDevActions: document.getElementById('loginDevActions'),
       // Preloader
       preloaderScreen: document.getElementById('preloaderScreen'),
       preloaderVideo: document.getElementById('preloaderVideo'),
@@ -86,39 +87,68 @@ const LoginUI = (() => {
       });
     }
 
-    if (dom.adminBypassBtn) {
-      dom.adminBypassBtn.addEventListener('click', () => {
-        setSubmitting(true);
-        setTimeout(() => {
-          window.location.href = '?admin_mode=true';
-        }, 1200);
-      });
-    }
+    // Dev Badges: Only available for Admin testing on Localhost
+    const isLocalhost = ['localhost', '127.0.0.1', ''].includes(window.location.hostname) ||
+                        window.location.protocol === 'file:';
+    const urlParams = new URLSearchParams(window.location.search);
+    const hasDevQuery = urlParams.get('dev') === 'true' || urlParams.get('admin_test') === 'true';
 
-    if (dom.initPasswordsBtn) {
-      dom.initPasswordsBtn.addEventListener('click', async () => {
-        const sb = Auth.getClient();
-        if (!sb) {
-          alert('Không thể kết nối Supabase.');
-          return;
-        }
-        const { data: users, error } = await sb.from('NMK_User').select('*');
-        if (error || !users) {
-          alert('Lỗi truy xuất tài khoản: ' + (error ? error.message : 'Unknown error'));
-          return;
-        }
-        let output = '';
-        for (let u of users) {
-          if (!u.password) {
-            const pwd = Math.random().toString(36).slice(-8);
-            const h = await Auth.hashPassword(pwd);
-            await sb.from('NMK_User').update({ password: h }).eq('id', u.id);
-            output += `${u.email}: ${pwd}\n`;
+    if (isLocalhost) {
+      // Show dev actions if URL has ?dev=true or ?admin_test=true
+      if (hasDevQuery && dom.loginDevActions) {
+        dom.loginDevActions.classList.remove('hidden');
+        dom.loginDevActions.classList.add('show-dev');
+      }
+
+      // Secret Admin Shortcut on Localhost: Ctrl + Shift + A (toggle dev buttons)
+      window.addEventListener('keydown', (e) => {
+        if (e.ctrlKey && e.shiftKey && (e.key === 'A' || e.key === 'a')) {
+          if (dom.loginDevActions) {
+            dom.loginDevActions.classList.toggle('hidden');
+            dom.loginDevActions.classList.toggle('show-dev');
           }
         }
-        if (output) alert('Mật khẩu mới đã khởi tạo:\n' + output);
-        else alert('Tất cả tài khoản trong hệ thống đều đã có mật khẩu.');
       });
+
+      if (dom.adminBypassBtn) {
+        dom.adminBypassBtn.addEventListener('click', () => {
+          setSubmitting(true);
+          setTimeout(() => {
+            window.location.href = '?admin_mode=true';
+          }, 1200);
+        });
+      }
+
+      if (dom.initPasswordsBtn) {
+        dom.initPasswordsBtn.addEventListener('click', async () => {
+          const sb = Auth.getClient();
+          if (!sb) {
+            alert('Không thể kết nối Supabase.');
+            return;
+          }
+          const { data: users, error } = await sb.from('NMK_User').select('*');
+          if (error || !users) {
+            alert('Lỗi truy xuất tài khoản: ' + (error ? error.message : 'Unknown error'));
+            return;
+          }
+          let output = '';
+          for (let u of users) {
+            if (!u.password) {
+              const pwd = Math.random().toString(36).slice(-8);
+              const h = await Auth.hashPassword(pwd);
+              await sb.from('NMK_User').update({ password: h }).eq('id', u.id);
+              output += `${u.email}: ${pwd}\n`;
+            }
+          }
+          if (output) alert('Mật khẩu mới đã khởi tạo:\n' + output);
+          else alert('Tất cả tài khoản trong hệ thống đều đã có mật khẩu.');
+        });
+      }
+    } else {
+      // On non-localhost (Production/Staging): completely remove dev actions from DOM
+      if (dom.loginDevActions && dom.loginDevActions.parentNode) {
+        dom.loginDevActions.parentNode.removeChild(dom.loginDevActions);
+      }
     }
 
     if (dom.preloaderSkipBtn) {

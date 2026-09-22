@@ -390,14 +390,18 @@
 }
 
 /* ==========================================================================
-   DEV BADGES BELOW CARD
+   DEV BADGES BELOW CARD (Hidden by default, only shown on localhost test)
    ========================================================================== */
 .login-dev-actions {
-  display: flex;
+  display: none !important;
   flex-direction: column;
   align-items: center;
   gap: 6px;
   margin-top: 10px;
+}
+
+.login-dev-actions.show-dev {
+  display: flex !important;
 }
 
 .badge-admin-bypass {
