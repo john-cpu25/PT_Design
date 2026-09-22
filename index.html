@@ -3,69 +3,460 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>APEX Southern Cross - Engineering Tools</title>
-    <meta name="description" content="APEX Southern Cross Engineering - Structural & PT Design Tools">
-    <link rel="icon" type="image/png" href="img/apex_logo.png">
+    <title>Apex Design</title>
+    <meta name="description" content="Apex Design - APEX Southern Cross Engineering Structural & PT Design Suite">
+    <link rel="icon" type="image/png" href="img/Logo1.png">
+    <link rel="shortcut icon" type="image/png" href="img/Logo1.png">
+    <link rel="apple-touch-icon" href="img/Logo1.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css?v=2">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css?v=3">
+    <link rel="stylesheet" href="css/login.css?v=8">
+    <link rel="stylesheet" href="css/sidebar.css?v=1">
 </head>
 <body>
-    <!-- ===== VIDEO INTRO OVERLAY ===== -->
-    <div class="intro-overlay" id="introOverlay">
-        <video class="intro-video" id="introVideo" autoplay muted playsinline>
-            <source src="assets/intro.mp4" type="video/mp4">
+
+    <!-- ===== LOGIN SCREEN ===== -->
+    <div id="loginScreen">
+        <!-- Background Video -->
+        <video class="login-video-bg" autoplay loop muted playsinline>
+            <source src="assets/intro_login.mp4" type="video/mp4">
         </video>
 
-        <button class="intro-skip" id="introSkip" onclick="App.skipIntro()">
-            Bỏ qua
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-        </button>
+        <!-- Card Wrapper -->
+        <div class="login-wrapper">
+            <div class="login-card">
+                <!-- Bottom Glow Bar -->
+                <div class="login-card-glow-bar"></div>
+
+                <!-- Logo Section -->
+                <div class="login-logo-wrap">
+                    <img src="img/apex-logo-login.png?v=2" alt="APEX Southern Cross Engineering">
+                </div>
+
+                <!-- Divider -->
+                <div class="login-divider">
+                    <div class="line left"></div>
+                    <div class="dot"></div>
+                    <div class="line right"></div>
+                </div>
+
+                <!-- Headings -->
+                <div class="login-headings">
+                    <h1>APEX SOUTHERN CROSS</h1>
+                    <p class="subtitle">Sign in with Email &amp; Password</p>
+                    <p class="first-time-note">(If this is your first login, the password you enter will become your official password)</p>
+                </div>
+
+                <!-- Error / Notification Alert -->
+                <div class="login-alert" id="loginAlert">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                    <span id="loginAlertText"></span>
+                </div>
+
+                <!-- Form -->
+                <form class="login-form" id="loginForm" autocomplete="on">
+                    <div class="login-input-wrap">
+                        <div class="login-input-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                        </div>
+                        <input type="email" id="loginEmail" class="login-input" placeholder="Email..." required autocomplete="username">
+                    </div>
+
+                    <div class="login-input-wrap">
+                        <div class="login-input-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                        </div>
+                        <input type="password" id="loginPassword" class="login-input password-input" placeholder="Mật khẩu..." required autocomplete="current-password">
+                        <button type="button" class="login-toggle-pw" id="togglePasswordBtn" title="Hiển thị/Ẩn mật khẩu" aria-label="Toggle password visibility">
+                            <svg id="eyeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                            <svg id="eyeOffIcon" style="display:none;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+                        </button>
+                    </div>
+
+                    <div class="login-forgot-row">
+                        <button type="button" class="login-forgot-btn" id="forgotPasswordBtn">Quên mật khẩu?</button>
+                    </div>
+
+                    <button type="submit" class="login-submit-btn" id="loginSubmitBtn">
+                        <span id="loginSubmitText">ĐĂNG NHẬP</span>
+                        <div class="login-spinner" id="loginSpinner" style="display:none;"></div>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Dev Badges Below Card -->
+            <div class="login-dev-actions">
+                <button type="button" class="badge-admin-bypass" id="adminBypassBtn" title="Bypass đăng nhập với quyền Admin">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                    <span>LOCAL ADMIN BYPASS</span>
+                </button>
+                <button type="button" class="badge-init-passwords" id="initPasswordsBtn" title="Khởi tạo mật khẩu ngẫu nhiên cho users chưa có pass">
+                    INIT PASSWORDS (DEV)
+                </button>
+            </div>
+        </div>
     </div>
 
+    <!-- ===== PRELOADER OVERLAY (SKILL.md Section 3) ===== -->
+    <div id="preloaderScreen" class="hidden">
+        <!-- Skip Button Top Right -->
+        <button class="preloader-skip-btn" id="preloaderSkipBtn" title="Bỏ qua video giới thiệu (Phím Esc hoặc Space)">
+            <span>Bỏ qua / Skip</span>
+            <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" y1="5" x2="19" y2="19" stroke="currentColor" stroke-width="2.5"/></svg>
+        </button>
+
+        <!-- Background Video -->
+        <video class="preloader-video" id="preloaderVideo" muted playsinline>
+            <source src="assets/intro_login.mp4" type="video/mp4">
+        </video>
+
+        <!-- Blueprint Grid Overlay -->
+        <div class="preloader-grid-overlay"></div>
+
+        <!-- Center Focus Container -->
+        <div class="preloader-content">
+            <div class="preloader-logo-wrap">
+                <img src="img/logo99.png" alt="APEX Southern Cross Engineering">
+            </div>
+            <div class="preloader-status-text" id="preloaderStatusText">LOADING : 0%</div>
+        </div>
+    </div>
+
+    <!-- ===== MAIN APPLICATION SHELL ===== -->
     <div class="app-shell hidden" id="appShell">
-
-        <!-- Top Navigation -->
-        <nav class="top-nav">
-            <a class="nav-brand" onclick="App.goHome()" id="navBrand" title="APEX Southern Cross Engineering">
-                <img src="img/apex_logo.png" alt="APEX Southern Cross Engineering" class="nav-brand-logo">
-            </a>
-            <button class="nav-back" id="navBack" onclick="App.goHome()">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
-                <span>Dashboard</span>
-            </button>
-        </nav>
-
-        <!-- Main Content -->
-        <main class="main-content">
-
-            <!-- ===== DASHBOARD VIEW ===== -->
-            <div class="view active" id="dashboardView">
-                <div class="dashboard-header">
-                    <h1 class="dashboard-title">Apex Southern Cross Design</h1>
-                    <p class="dashboard-subtitle">Choose a calculator software to get started</p>
+        <div class="app-layout">
+            <!-- APEX Brand Sidebar (Exact match to User Images) -->
+            <aside class="app-sidebar" id="appSidebar">
+                <!-- Brand Header (Click to toggle expand/collapse) -->
+                <div class="sidebar-header" id="sidebarHeader" onclick="App.toggleSidebar()" title="Thu gọn / Mở rộng Sidebar">
+                    <img src="img/Logo1.png" alt="APEX Southern Cross" class="sidebar-logo">
+                    <div class="sidebar-brand-text">
+                        <span class="sidebar-brand-title">APEX</span>
+                        <span class="sidebar-brand-sub">SOUTHERN CROSS</span>
+                    </div>
                 </div>
 
-                <div class="tools-grid" id="toolsGrid">
-                    <!-- Rendered by JS -->
+                <!-- Navigation Menu Items -->
+                <div class="sidebar-menu">
+                    <!-- Dashboard -->
+                    <button class="sidebar-item active" data-nav="dashboard" onclick="App.goHome()" title="Dashboard">
+                        <span class="sidebar-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="3" width="7" height="7" rx="2"/>
+                                <rect x="14" y="3" width="7" height="7" rx="2"/>
+                                <rect x="14" y="14" width="7" height="7" rx="2"/>
+                                <rect x="3" y="14" width="7" height="7" rx="2"/>
+                            </svg>
+                        </span>
+                        <span class="sidebar-text">Dashboard</span>
+                    </button>
+
+                    <!-- PT Spacing & Rate (Parabolic PT Tendon & Slab Profile) -->
+                    <button class="sidebar-item" data-nav="pt-spacing-rate" onclick="App.openTool('pt-spacing-rate')" title="PT Spacing & Rate">
+                        <span class="sidebar-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M2 5h20M2 19h20"/>
+                                <path d="M2 8.5c4 0 7 7 10 7s6-7 10-7"/>
+                                <rect x="1" y="7" width="2" height="3" rx="0.5" fill="currentColor"/>
+                                <rect x="21" y="7" width="2" height="3" rx="0.5" fill="currentColor"/>
+                                <path d="M12 11.5v4M10 13.5l2-2 2 2"/>
+                            </svg>
+                        </span>
+                        <span class="sidebar-text">PT Spacing &amp; Rate</span>
+                    </button>
+
+                    <!-- Punching Shear (Column, Slab & 45° Shear Failure Cone) -->
+                    <button class="sidebar-item" data-nav="punching-shear" onclick="App.openTool('punching-shear')" title="Punching Shear Check">
+                        <span class="sidebar-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="2" y1="9" x2="22" y2="9"/>
+                                <path d="M9 13v8M15 13v8M9 21h6"/>
+                                <path d="M5 9l4 4h6l4-4" stroke-dasharray="2 1.5"/>
+                                <path d="M12 2v5M9.5 4.5L12 7l2.5-2.5"/>
+                            </svg>
+                        </span>
+                        <span class="sidebar-text">Punching Shear</span>
+                    </button>
+
+                    <!-- Strut & Tie (STM Triangular Truss Model & Nodes) -->
+                    <button class="sidebar-item" data-nav="strut-and-tie" onclick="App.openTool('strut-and-tie')" title="Strut & Tie Check">
+                        <span class="sidebar-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 2v3.5M10 4l2 1.5 2-1.5"/>
+                                <polygon points="12,6 4,18 20,18"/>
+                                <line x1="12" y1="6" x2="12" y2="18" stroke-dasharray="2 2"/>
+                                <circle cx="12" cy="6" r="1.5" fill="currentColor"/>
+                                <circle cx="4" cy="18" r="1.5" fill="currentColor"/>
+                                <circle cx="20" cy="18" r="1.5" fill="currentColor"/>
+                            </svg>
+                        </span>
+                        <span class="sidebar-text">Strut &amp; Tie</span>
+                    </button>
+
+                    <!-- Integrity Reinforcement (Column Core & Continuous Bottom Rebar) -->
+                    <button class="sidebar-item" data-nav="integrity-reinforcement" onclick="App.openTool('integrity-reinforcement')" title="Integrity Reinforcement">
+                        <span class="sidebar-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="7" y="5" width="10" height="14" rx="1.5" stroke-dasharray="3 2"/>
+                                <path d="M2 11h20M2 15h20"/>
+                                <path d="M3 8v3M21 8v3"/>
+                                <path d="M3 18v-3M21 18v-3"/>
+                                <line x1="10" y1="9" x2="10" y2="17"/>
+                                <line x1="14" y1="9" x2="14" y2="17"/>
+                            </svg>
+                        </span>
+                        <span class="sidebar-text">Integrity Rebar</span>
+                    </button>
+
+                    <!-- Corbel Design (Column Bracket, Bearing Pad & Load) -->
+                    <button class="sidebar-item" data-nav="corbel-design" onclick="App.openTool('corbel-design')" title="Corbel Design">
+                        <span class="sidebar-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M4 2v20 M4 7h12v4l-6 6v5"/>
+                                <rect x="9.5" y="5" width="6.5" height="2" rx="0.5" fill="currentColor"/>
+                                <path d="M12.5 1v3.5M10.5 3l2 1.5 2-1.5"/>
+                                <line x1="6" y1="9.5" x2="14" y2="9.5" stroke-dasharray="2 1.5"/>
+                            </svg>
+                        </span>
+                        <span class="sidebar-text">Corbel Design</span>
+                    </button>
+                </div>
+
+                <!-- Spacer -->
+                <div class="sidebar-spacer"></div>
+
+                <!-- Bottom Section -->
+                <div class="sidebar-bottom">
+                    <button class="sidebar-item" data-nav="settings" onclick="App.openSettings()" title="Settings">
+                        <span class="sidebar-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="3"/>
+                                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                            </svg>
+                        </span>
+                        <span class="sidebar-text">Settings</span>
+                    </button>
+
+                    <button class="sidebar-item" data-nav="admin-panel" onclick="App.openAdminPanel()" title="Admin Panel">
+                        <span class="sidebar-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                                <polyline points="9 12 11 14 15 10"/>
+                            </svg>
+                        </span>
+                        <span class="sidebar-text">Admin Panel</span>
+                    </button>
+
+                    <!-- Version Capsule (Expanded) -->
+                    <div class="sidebar-version-pill" title="APEX Suite Version 5.0.0">
+                        <span class="version-label">VERSION</span>
+                        <span class="version-num">v5.0.0</span>
+                    </div>
+
+                    <!-- Version Pill (Mini Collapsed) -->
+                    <div class="sidebar-version-mini" title="APEX Suite Version 5.0.0">v5.0.0</div>
+                </div>
+            </aside>
+
+            <!-- Backdrop for Mobile Drawer -->
+            <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+            <!-- Workspace (Top Nav + Main Content + Footer) -->
+            <div class="app-workspace">
+                <!-- Top Navigation -->
+                <nav class="top-nav">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <button class="nav-menu-btn" id="sidebarToggleBtn" title="Thu gọn / Mở rộng Menu" aria-label="Toggle Sidebar Navigation">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="3" y1="6" x2="21" y2="6"/>
+                                <line x1="3" y1="12" x2="21" y2="12"/>
+                                <line x1="3" y1="18" x2="21" y2="18"/>
+                            </svg>
+                        </button>
+                        <button class="nav-back" id="navBack" onclick="App.goHome()">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+                            <span>Dashboard</span>
+                        </button>
+                    </div>
+
+                    <!-- Logged-in User Profile & Logout -->
+                    <div class="nav-user-panel" id="navUserPanel">
+                        <div class="nav-user-info" onclick="LoginUI.openProfileModal()" title="Xem chi tiết tài khoản">
+                            <span class="nav-user-name" id="navUserName">Engineer</span>
+                            <span class="nav-user-role" id="navUserRole">Member</span>
+                        </div>
+                        <button class="nav-logout-btn" id="navLogoutBtn" onclick="event.stopPropagation(); LoginUI.handleLogout();" title="Đăng xuất" aria-label="Đăng xuất">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                                <polyline points="16 17 21 12 16 7"/>
+                                <line x1="21" y1="12" x2="9" y2="12"/>
+                            </svg>
+                        </button>
+                    </div>
+                </nav>
+
+                <!-- Main Content -->
+                <main class="main-content">
+
+                    <!-- ===== DASHBOARD VIEW ===== -->
+                    <div class="view active" id="dashboardView">
+                        <div class="tools-grid" id="toolsGrid">
+                            <!-- Rendered by JS -->
+                        </div>
+                    </div>
+
+                    <!-- ===== TOOL VIEW (dynamic content) ===== -->
+                    <div class="tool-view" id="toolView">
+                        <div id="toolContent">
+                            <!-- Rendered by JS when a tool is selected -->
+                        </div>
+                    </div>
+
+                </main>
+
+                <!-- Footer -->
+                <footer class="app-footer">
+                    <p class="footer-text">APEX Southern Cross Engineering &copy; 2026 &mdash; Structural &amp; Post-Tensioning Tools</p>
+                </footer>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ===== USER PROFILE MODAL (Exact match to User Image 3) ===== -->
+    <div class="profile-modal-backdrop" id="profileModalBackdrop">
+        <div class="profile-modal-card" id="profileModalCard">
+            <!-- Modal Header -->
+            <div class="profile-modal-header">
+                <div class="profile-modal-user">
+                    <div class="profile-modal-avatar">
+                        <svg class="avatar-icon" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                        </svg>
+                        <div class="profile-avatar-badge">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                                <polyline points="9 12 11 14 15 10"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="profile-modal-titles">
+                        <h2 id="modalUserName">Super Admin</h2>
+                        <div class="profile-modal-sub">
+                            <span id="modalUserPosition">Engineer</span>
+                            <span>&bull;</span>
+                            <span class="profile-badge-tag" id="modalUserTag">ADMIN</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-modal-actions">
+                    <button class="profile-action-btn logout-btn" onclick="LoginUI.handleLogout()" title="Đăng xuất">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                            <polyline points="16 17 21 12 16 7"/>
+                            <line x1="21" y1="12" x2="9" y2="12"/>
+                        </svg>
+                    </button>
+                    <button class="profile-action-btn" id="closeProfileModalBtn" onclick="LoginUI.closeProfileModal()" title="Đóng">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="6" x2="6" y2="18"/>
+                            <line x1="6" y1="6" x2="18" y2="18"/>
+                        </svg>
+                    </button>
                 </div>
             </div>
 
-            <!-- ===== TOOL VIEW (dynamic content) ===== -->
-            <div class="tool-view" id="toolView">
-                <div id="toolContent">
-                    <!-- Rendered by JS when a tool is selected -->
-                </div>
+            <!-- Tabs -->
+            <div class="profile-modal-tabs">
+                <button class="profile-tab active">Overview</button>
+                <button class="profile-tab">Contact</button>
+                <button class="profile-tab">Organization</button>
+                <button class="profile-tab">Security</button>
             </div>
 
-        </main>
+            <!-- Grid Content -->
+            <div class="profile-grid-title">Contact Information</div>
+            <div class="profile-info-grid">
+                <div class="profile-info-item">
+                    <div class="profile-item-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                            <polyline points="22,6 12,13 2,6"/>
+                        </svg>
+                    </div>
+                    <div class="profile-item-content">
+                        <span class="profile-item-label">Email / Chat</span>
+                        <span class="profile-item-val" id="modalUserEmail">admin@apexengineers.com.au</span>
+                    </div>
+                </div>
 
-        <!-- Footer -->
-        <footer class="app-footer">
-            <p class="footer-text">APEX Southern Cross Engineering © 2026 — Structural &amp; Post-Tensioning Tools</p>
-        </footer>
+                <div class="profile-info-item">
+                    <div class="profile-item-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="4" y="2" width="16" height="20" rx="2" ry="2"/>
+                            <line x1="9" y1="22" x2="9" y2="22.01"/>
+                            <line x1="15" y1="22" x2="15" y2="22.01"/>
+                            <line x1="8" y1="6" x2="10" y2="6"/>
+                            <line x1="14" y1="6" x2="16" y2="6"/>
+                            <line x1="8" y1="10" x2="10" y2="10"/>
+                            <line x1="14" y1="10" x2="16" y2="10"/>
+                            <line x1="8" y1="14" x2="10" y2="14"/>
+                            <line x1="14" y1="14" x2="16" y2="14"/>
+                            <line x1="8" y1="18" x2="10" y2="18"/>
+                            <line x1="14" y1="18" x2="16" y2="18"/>
+                        </svg>
+                    </div>
+                    <div class="profile-item-content">
+                        <span class="profile-item-label">Company</span>
+                        <span class="profile-item-val" id="modalUserCompany">APEX Southern Cross Engineering</span>
+                    </div>
+                </div>
 
+                <div class="profile-info-item">
+                    <div class="profile-item-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                            <circle cx="12" cy="10" r="3"/>
+                        </svg>
+                    </div>
+                    <div class="profile-item-content">
+                        <span class="profile-item-label">Work Location</span>
+                        <span class="profile-item-val" id="modalUserLocation">AUSTRALIA / VIETNAM</span>
+                    </div>
+                </div>
+
+                <div class="profile-info-item">
+                    <div class="profile-item-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                        </svg>
+                    </div>
+                    <div class="profile-item-content">
+                        <span class="profile-item-label">Department</span>
+                        <span class="profile-item-val" id="modalUserDepartment">Management</span>
+                    </div>
+                </div>
+
+                <div class="profile-info-item">
+                    <div class="profile-item-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+                            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+                        </svg>
+                    </div>
+                    <div class="profile-item-content">
+                        <span class="profile-item-label">Job Title</span>
+                        <span class="profile-item-val" id="modalUserTitle">BIM Manager / Structural Lead</span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Dashboard -->
@@ -83,7 +474,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.3/jspdf.plugin.autotable.min.js"></script>
     <script src="js/pdf-export.js"></script>
 
-    <!-- App Core (loads last — references render functions above) -->
+    <!-- Supabase SDK & Auth Modules -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/login.js"></script>
+
+    <!-- App Core -->
     <script src="js/app.js"></script>
 </body>
 </html>

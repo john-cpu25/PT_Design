@@ -65,54 +65,112 @@ const App = (() => {
     // ─── Initialize ───
     function init() {
         renderDashboard(TOOLS);
-        setupIntro();
+        initSidebar();
+        if (typeof LoginUI !== 'undefined') {
+            LoginUI.init((user) => {
+                showApp();
+            });
+        } else {
+            showApp();
+        }
     }
 
-    // ─── Video Intro ───
-    function setupIntro() {
-        const overlay = document.getElementById('introOverlay');
-        const video = document.getElementById('introVideo');
-        if (!overlay || !video) {
-            showApp();
-            return;
+    // ─── APEX Brand Sidebar Logic ───
+    function initSidebar() {
+        const toggleBtn = document.getElementById('sidebarToggleBtn');
+        const sidebar = document.getElementById('appSidebar');
+        const backdrop = document.getElementById('sidebarBackdrop');
+
+        // Restore mini mode state on desktop
+        const savedMini = localStorage.getItem('apex_sidebar_mini');
+        if (savedMini === 'true' && window.innerWidth > 768) {
+            document.body.classList.add('sidebar-mini');
         }
 
-        // When video ends, smoothly fade out intro to dashboard
-        video.addEventListener('ended', () => {
-            dismissIntro();
-        });
+        if (toggleBtn) {
+            toggleBtn.addEventListener('click', toggleSidebar);
+        }
 
-        // Fallback: if video fails to load, skip immediately
-        video.addEventListener('error', () => {
-            dismissIntro();
+        if (backdrop) {
+            backdrop.addEventListener('click', closeMobileDrawer);
+        }
+
+        // Close mobile drawer on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeMobileDrawer();
+            }
         });
     }
 
-    function skipIntro() {
-        const video = document.getElementById('introVideo');
-        if (video) video.pause();
-        dismissIntro();
+    function toggleSidebar() {
+        if (window.innerWidth <= 768) {
+            // Mobile Drawer toggle
+            const sidebar = document.getElementById('appSidebar');
+            const backdrop = document.getElementById('sidebarBackdrop');
+            if (sidebar) sidebar.classList.toggle('drawer-open');
+            if (backdrop) backdrop.classList.toggle('active');
+        } else {
+            // Desktop Expanded / Mini Rail toggle (68px <-> 240px)
+            const isMini = document.body.classList.toggle('sidebar-mini');
+            localStorage.setItem('apex_sidebar_mini', isMini ? 'true' : 'false');
+        }
     }
 
-    function dismissIntro() {
-        const overlay = document.getElementById('introOverlay');
-        if (!overlay) return;
+    function closeMobileDrawer() {
+        const sidebar = document.getElementById('appSidebar');
+        const backdrop = document.getElementById('sidebarBackdrop');
+        if (sidebar) sidebar.classList.remove('drawer-open');
+        if (backdrop) backdrop.classList.remove('active');
+    }
 
-        overlay.classList.add('fade-out');
+    function updateSidebarActive(targetNav) {
+        const items = document.querySelectorAll('.sidebar-item[data-nav]');
+        items.forEach(item => {
+            if (item.getAttribute('data-nav') === targetNav) {
+                item.classList.add('active');
+            } else {
+                item.classList.remove('active');
+            }
+        });
+        closeMobileDrawer();
+    }
 
-        // Show app shell immediately so it's visible behind the fading overlay
-        showApp();
+    function openSettings() {
+        updateSidebarActive('settings');
+        alert('⚙️ Cài đặt hệ thống (APEX Design Suite v5.0.0)\n\n• Tiêu chuẩn thiết kế: AS 3600:2018\n• Hệ đơn vị: Metric (mm, MPa, kN, kNm)\n• Ngôn ngữ: Tiếng Việt / English\n• Giao diện: APEX Executive Modern Theme');
+    }
 
-        // Remove overlay from DOM after transition
-        setTimeout(() => {
-            overlay.remove();
-        }, 900);
+    function openAdminPanel() {
+        updateSidebarActive('admin-panel');
+        const user = (typeof Auth !== 'undefined') ? Auth.getCurrentUser() : null;
+        const role = user ? (user.role || 'Member') : 'Admin (Local)';
+        const email = user ? user.email : 'admin@apex-engineering.com';
+        alert(`🛡️ Bảng Điều Khiển Quản Trị Viên (Admin Panel)\n\n• Tài khoản: ${email}\n• Phân quyền: ${role}\n• Trạng thái hệ thống: Supabase Connected (NMK_User)\n• Phiên bản ứng dụng: v5.0.0`);
+    }
+
+    function exportCurrentPDF() {
+        if (currentTool && typeof PDFExport !== 'undefined') {
+            PDFExport.exportCurrentTool(currentTool.id);
+        } else {
+            alert('Vui lòng chọn một công cụ tính toán từ danh sách trước khi xuất báo cáo PDF.');
+        }
     }
 
     function showApp() {
         const appShell = document.getElementById('appShell');
         if (appShell) appShell.classList.remove('hidden');
         document.body.classList.add('on-dashboard');
+        if (typeof Auth !== 'undefined' && typeof LoginUI !== 'undefined') {
+            const user = Auth.getSession();
+            if (user) LoginUI.updateNavUserProfile(user);
+        }
+    }
+
+    function hideApp() {
+        const appShell = document.getElementById('appShell');
+        if (appShell) appShell.classList.add('hidden');
+        document.body.classList.remove('on-dashboard', 'tool-active');
     }
 
     // ─── Navigation ───
@@ -121,6 +179,7 @@ const App = (() => {
         if (!tool) return;
 
         currentTool = tool;
+        updateSidebarActive(toolId);
 
         // Switch views
         document.getElementById('dashboardView').classList.remove('active');
@@ -161,6 +220,7 @@ const App = (() => {
 
     function goHome() {
         currentTool = null;
+        updateSidebarActive('dashboard');
 
         document.getElementById('toolView').classList.remove('active');
         const dash = document.getElementById('dashboardView');
@@ -179,7 +239,7 @@ const App = (() => {
     }
 
     // ─── Public API ───
-    return { init, openTool, goHome, skipIntro };
+    return { init, openTool, goHome, showApp, hideApp, exportCurrentPDF, toggleSidebar, openSettings, openAdminPanel };
 
 })();
 

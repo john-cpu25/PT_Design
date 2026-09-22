@@ -1,0 +1,370 @@
+/* ==========================================================================
+   APEX SOUTHERN CROSS - SIDEBAR NAVIGATION (Exact match to User Spec)
+   ========================================================================== */
+
+/* Overall Application Layout */
+.app-layout {
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+    position: relative;
+    background-color: var(--bg-secondary);
+}
+
+.app-workspace {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+body.tool-active .app-workspace {
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* ==========================================================================
+   SIDEBAR CONTAINER (Desktop Expanded: 240px | Collapsed: 68px)
+   ========================================================================== */
+.app-sidebar {
+    width: 240px;
+    background: #FFFFFF;
+    border-right: 1px solid #E2E8F0;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 16px 12px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 100;
+    user-select: none;
+    scrollbar-width: none;
+}
+
+.app-sidebar::-webkit-scrollbar {
+    display: none;
+}
+
+/* --------------------------------------------------------------------------
+   BRAND HEADER
+   -------------------------------------------------------------------------- */
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 4px 6px 20px;
+    cursor: pointer;
+    transition: opacity var(--transition-fast);
+}
+
+.sidebar-header:hover {
+    opacity: 0.9;
+}
+
+.sidebar-logo {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    object-fit: contain;
+    flex-shrink: 0;
+    display: block;
+    box-shadow: 0 4px 14px rgba(30, 64, 175, 0.18);
+    transition: transform var(--transition-fast);
+}
+
+.sidebar-header:hover .sidebar-logo {
+    transform: scale(1.03);
+}
+
+.sidebar-brand-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.15;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.sidebar-brand-title {
+    font-size: 16px;
+    font-weight: 800;
+    color: #0F172A;
+    letter-spacing: 0.04em;
+    font-family: 'Rajdhani', 'Inter', sans-serif;
+}
+
+.sidebar-brand-sub {
+    font-size: 9.5px;
+    font-weight: 700;
+    color: #64748B;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-family: 'Inter', sans-serif;
+}
+
+/* --------------------------------------------------------------------------
+   MENU ITEMS & ICONS
+   -------------------------------------------------------------------------- */
+.sidebar-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 4px;
+}
+
+.sidebar-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    height: 44px;
+    padding: 0 12px;
+    border-radius: 12px;
+    color: #475569;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    width: 100%;
+    text-align: left;
+    box-sizing: border-box;
+    transition: background-color var(--transition-fast), color var(--transition-fast), transform 0.1s ease;
+    position: relative;
+}
+
+.sidebar-item:hover {
+    background-color: #F8FAFC;
+    color: #1E293B;
+}
+
+.sidebar-item:active {
+    transform: scale(0.98);
+}
+
+.sidebar-icon {
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #475569;
+    flex-shrink: 0;
+    transition: color var(--transition-fast);
+}
+
+.sidebar-icon svg {
+    width: 21px;
+    height: 21px;
+    stroke-width: 1.85;
+}
+
+.sidebar-text {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-family: 'Inter', system-ui, sans-serif;
+}
+
+/* Active State (Soft Lilac / Indigo Pill) */
+.sidebar-item.active {
+    background-color: #EEF2FF;
+    color: #1E293B;
+    font-weight: 600;
+}
+
+.sidebar-item.active .sidebar-icon {
+    color: #6366F1;
+}
+
+/* --------------------------------------------------------------------------
+   SPACER & BOTTOM SECTION
+   -------------------------------------------------------------------------- */
+.sidebar-spacer {
+    flex: 1;
+    min-height: 24px;
+}
+
+.sidebar-bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding-top: 12px;
+}
+
+/* Version Capsule (Expanded) */
+.sidebar-version-pill {
+    background: #EEF2FF;
+    border-radius: 9999px;
+    padding: 10px 16px;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.version-label {
+    font-size: 11px;
+    font-weight: 800;
+    color: #6366F1;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.version-num {
+    font-size: 12px;
+    font-weight: 600;
+    color: #475569;
+}
+
+/* Version Pill (Collapsed Mini) */
+.sidebar-version-mini {
+    display: none;
+    background: #EEF2FF;
+    border-radius: 9999px;
+    padding: 6px 8px;
+    margin: 10px auto 0;
+    font-size: 11px;
+    font-weight: 600;
+    color: #475569;
+    text-align: center;
+    width: fit-content;
+}
+
+/* ==========================================================================
+   COLLAPSED / MINI RAIL MODE (Exact match to Image 1: 68px width)
+   ========================================================================== */
+body.sidebar-mini .app-sidebar {
+    width: 68px;
+    padding: 16px 8px;
+    align-items: center;
+}
+
+body.sidebar-mini .sidebar-header {
+    padding: 4px 0 20px;
+    justify-content: center;
+}
+
+body.sidebar-mini .sidebar-brand-text {
+    display: none;
+}
+
+body.sidebar-mini .sidebar-logo {
+    width: 42px;
+    height: 42px;
+}
+
+body.sidebar-mini .sidebar-menu {
+    width: 100%;
+    align-items: center;
+    gap: 8px;
+}
+
+body.sidebar-mini .sidebar-bottom {
+    width: 100%;
+    align-items: center;
+    gap: 8px;
+}
+
+body.sidebar-mini .sidebar-item {
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    justify-content: center;
+    border-radius: 12px;
+}
+
+body.sidebar-mini .sidebar-text {
+    display: none;
+}
+
+body.sidebar-mini .sidebar-item.active {
+    background-color: #EEF2FF;
+}
+
+body.sidebar-mini .sidebar-item.active .sidebar-icon {
+    color: #6366F1;
+}
+
+body.sidebar-mini .sidebar-version-pill {
+    display: none;
+}
+
+body.sidebar-mini .sidebar-version-mini {
+    display: block;
+}
+
+/* ==========================================================================
+   MOBILE DRAWER (< 768px)
+   ========================================================================== */
+.sidebar-backdrop {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .app-sidebar {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        height: 100vh;
+        width: 250px !important;
+        transform: translateX(-100%);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        z-index: 1001;
+        transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .app-sidebar.drawer-open {
+        transform: translateX(0);
+    }
+
+    .sidebar-backdrop {
+        display: block;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.45);
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        z-index: 1000;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.25s ease, visibility 0.25s ease;
+    }
+
+    .sidebar-backdrop.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    body.sidebar-mini .sidebar-brand-text {
+        display: flex;
+    }
+
+    body.sidebar-mini .sidebar-text {
+        display: block;
+    }
+
+    body.sidebar-mini .sidebar-item {
+        width: 100%;
+        height: 44px;
+        padding: 0 12px;
+        justify-content: flex-start;
+    }
+
+    body.sidebar-mini .sidebar-version-pill {
+        display: flex;
+    }
+
+    body.sidebar-mini .sidebar-version-mini {
+        display: none;
+    }
+}

@@ -414,6 +414,7 @@ body.tool-active .calc-result-value {
 .nav-brand {
     display: flex;
     align-items: center;
+    gap: 12px;
     cursor: pointer;
     text-decoration: none;
     transition: transform 0.2s ease;
@@ -423,12 +424,36 @@ body.tool-active .calc-result-value {
     transform: scale(1.02);
 }
 
-.nav-brand-logo {
-    height: 50px;
-    width: auto;
+.nav-brand-icon {
+    height: 42px;
+    width: 42px;
+    border-radius: 10px;
     object-fit: contain;
     display: block;
-    filter: drop-shadow(0 2px 4px rgba(10, 37, 64, 0.08));
+    box-shadow: 0 4px 12px rgba(10, 37, 64, 0.15);
+}
+
+.nav-brand-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+}
+
+.nav-brand-title {
+    font-size: 20px;
+    font-weight: 900;
+    color: #000000;
+    letter-spacing: 0.04em;
+    font-family: 'Rajdhani', 'Inter', sans-serif;
+}
+
+.nav-brand-sub {
+    font-size: 10px;
+    font-weight: 700;
+    color: #64748b;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-family: 'Inter', sans-serif;
 }
 
 .nav-back {
